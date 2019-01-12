@@ -1,0 +1,67 @@
+.innerBox > * {
+  width: 100%;
+}
+
+.moreHeight {
+  height: 100px;
+}
+
+@media (min-width: 768px) {
+  .loginBox {
+    width: 450px;
+    margin: 0 auto;
+    background: #fafafa;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    border-radius: 6px;
+    border: 1px solid #e4ecf3;
+    padding: 40px 60px;
+  }
+
+  .title {
+    text-align: center;
+    font-size: 30px;
+    color: #9283ae;
+    margin-bottom: 15px;
+  }
+
+  .foot {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    button {
+      width: 80px;
+      padding: 3px;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .loginBox {
+    margin: 0 auto;
+    background: #fafafa;
+    padding: 40px 60px;
+  }
+
+  .title {
+    text-align: center;
+    font-size: 24px;
+    color: #9283ae;
+    margin-bottom: 15px;
+  }
+
+  .foot {
+    display: flex;
+    flex-wrap: wrap;
+    //align-items: center;
+    button {
+      width: 100%;
+      padding: 4px;
+    }
+    div {
+      padding: 20px 0;
+      width: 100%;
+      text-align: center;
+    }
+  }
+}

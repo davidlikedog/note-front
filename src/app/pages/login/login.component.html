@@ -1,3 +1,20 @@
-<p>
-  login works!
-</p>
+<div class="moreHeight"></div>
+<div class="loginBox">
+  <div class="title">登录</div>
+  <div class="innerBox">
+    <mat-form-field appearance="outline">
+      <mat-label>账号</mat-label>
+      <input #account matInput type="text" placeholder="请输入账号">
+      <mat-hint style="color: #f44336;">账号不能为空</mat-hint>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>密码</mat-label>
+      <input #password matInput type="password" placeholder="请输入密码">
+      <mat-hint style="color: #f44336;">密码不能为空</mat-hint>
+    </mat-form-field>
+    <div class="foot">
+      <button mat-stroked-button color="primary">登录</button>
+    </div>
+  </div>
+</div>
+
