@@ -11,14 +11,17 @@ import {DetailComponent} from './detail/detail.component';
 
 import {PagesRoutingModule} from './pages-routing.module';
 import {MaterialModule} from './material/material.module';
+import {LayoutModule} from './layout/layout.module';
 
 import {VerifyLogin} from './verify/verifyLogin/verifyLogin';
+import { PictureRotateComponent } from './picture-rotate/picture-rotate.component';
 
 @NgModule({
   imports: [
     CommonModule,
     PagesRoutingModule,
     MaterialModule,
+    LayoutModule,
   ],
   declarations: [
     PagesComponent,
@@ -28,7 +31,8 @@ import {VerifyLogin} from './verify/verifyLogin/verifyLogin';
     HomeComponent,
     AddComponent,
     ModifyComponent,
-    DetailComponent
+    DetailComponent,
+    PictureRotateComponent,
   ],
   providers: [
     VerifyLogin

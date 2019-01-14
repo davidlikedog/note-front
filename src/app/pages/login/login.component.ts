@@ -6,10 +6,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./login.component.less']
 })
 export class LoginComponent implements OnInit {
+  protected height: number;
 
-  constructor() { }
+  constructor() {
+    this.height = 0;
+  }
 
   ngOnInit() {
+    this.height = window.innerHeight - 64;
   }
 
 }

@@ -3,14 +3,23 @@
 }
 
 .moreHeight {
-  height: 100px;
+  height: 150px;
+}
+
+.bg {
+  width: 100%;
+  background: url("../../../assets/img/loginBg1.jpg") no-repeat;
+  //background-clip: padding-box;
+  background-position-x: 50%;
+  background-position-y: 50%;
+  background-size: cover;
 }
 
 @media (min-width: 768px) {
   .loginBox {
     width: 450px;
     margin: 0 auto;
-    background: #fafafa;
+    background: rgba(255, 251, 247, 0.95);
     -webkit-border-radius: 6px;
     -moz-border-radius: 6px;
     border-radius: 6px;
@@ -39,7 +48,7 @@
 @media (max-width: 768px) {
   .loginBox {
     margin: 0 auto;
-    background: #fafafa;
+    background: rgba(255, 251, 247, 0.95);
     padding: 40px 60px;
   }
 

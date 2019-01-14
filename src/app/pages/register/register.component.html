@@ -1,3 +1,31 @@
-<p>
-  register works!
-</p>
+<div class="bg" [ngStyle]="{'height.px':height}">
+  <div class="register">
+    <div class="circle">
+      <img src="../../../assets/img/photo.png" alt="">
+      <div class="photoText">头像</div>
+    </div>
+    <div class="formContainer">
+      <mat-form-field appearance="outline">
+        <mat-label>昵称</mat-label>
+        <input #account matInput type="text" placeholder="请输入账号">
+        <mat-hint style="color: #f44336;">昵称不能为空</mat-hint>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>账号</mat-label>
+        <input #account matInput type="text" placeholder="请输入账号">
+        <mat-hint style="color: #f44336;">账号不能为空</mat-hint>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>密码</mat-label>
+        <input #account matInput type="text" placeholder="请输入账号">
+        <mat-hint style="color: #f44336;">密码不能为空</mat-hint>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>重复密码</mat-label>
+        <input #account matInput type="text" placeholder="请输入账号">
+        <mat-hint style="color: #f44336;">密码有误</mat-hint>
+      </mat-form-field>
+      <button class="moreTop" mat-raised-button color="primary">注册</button>
+    </div>
+  </div>
+</div>
