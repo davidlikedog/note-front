@@ -10,18 +10,21 @@ import {ModifyComponent} from './modify/modify.component';
 import {DetailComponent} from './detail/detail.component';
 
 import {PagesRoutingModule} from './pages-routing.module';
-import {MaterialModule} from './material/material.module';
-import {LayoutModule} from './layout/layout.module';
+import {MaterialModule} from './materialModules/material.module';
+import {LayoutComponent} from './layout/layout.component';
 
 import {VerifyLogin} from './verify/verifyLogin/verifyLogin';
 import { PictureRotateComponent } from './picture-rotate/picture-rotate.component';
+import {FormsModule} from '@angular/forms';
+import {ReactiveFormsModule} from '@angular/forms';
 
 @NgModule({
   imports: [
     CommonModule,
     PagesRoutingModule,
     MaterialModule,
-    LayoutModule,
+    FormsModule,
+    ReactiveFormsModule,
   ],
   declarations: [
     PagesComponent,
@@ -33,6 +36,7 @@ import { PictureRotateComponent } from './picture-rotate/picture-rotate.componen
     ModifyComponent,
     DetailComponent,
     PictureRotateComponent,
+    LayoutComponent,
   ],
   providers: [
     VerifyLogin

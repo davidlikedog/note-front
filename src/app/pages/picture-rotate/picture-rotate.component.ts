@@ -21,7 +21,7 @@ export class PictureRotateComponent implements OnInit, AfterViewInit {
     setTimeout(() => {
       this.picture = new PicReturn(this.picBox, 2000, this.points, 'pointSelected');
       this.picture.start();
-    }, 100);
+    }, 300);
   }
 
 }

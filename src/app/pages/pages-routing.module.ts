@@ -18,13 +18,13 @@ const routes: Routes = [
   {
     path: '', component: PagesComponent,
     children: [
+      {path: '', redirectTo: 'home', pathMatch: 'full'},
       {path: 'home', component: HomeComponent},
       {path: 'detail/:id', component: DetailComponent},
       {path: 'login', component: LoginComponent},
       {path: 'register', component: RegisterComponent},
       {path: 'add', component: AddComponent, canActivate: [VerifyLogin]},
       {path: 'modify/:id', component: ModifyComponent, canActivate: [VerifyLogin]},
-      {path: '', redirectTo: 'home', pathMatch: 'full'},
       {path: '**', component: NotFoundComponent},
     ]
   },

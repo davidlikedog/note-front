@@ -5,16 +5,16 @@
     <div class="innerBox">
       <mat-form-field appearance="outline">
         <mat-label>账号</mat-label>
-        <input #account matInput type="text" placeholder="请输入账号">
-        <mat-hint style="color: #f44336;">账号不能为空</mat-hint>
+        <input #account [(formControl)]="accountValue" matInput type="text" placeholder="请输入账号" required>
+        <mat-error *ngIf="accountValue.hasError('required')">{{testAccountError()}}</mat-error>
       </mat-form-field>
       <mat-form-field appearance="outline">
         <mat-label>密码</mat-label>
-        <input #password matInput type="password" placeholder="请输入密码">
-        <mat-hint style="color: #f44336;">密码不能为空</mat-hint>
+        <input #password [(formControl)]="passwordValue" matInput type="password" placeholder="请输入密码" required>
+        <mat-error *ngIf="passwordValue.hasError('required')">{{testPasswordError()}}</mat-error>
       </mat-form-field>
       <div class="foot">
-        <button mat-stroked-button color="primary">登录</button>
+        <button [disabled]="disablesLoginBtn" (click)="login()" mat-raised-button color="primary">登录</button>
       </div>
     </div>
   </div>

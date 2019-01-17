@@ -4,9 +4,33 @@
 
 <mat-toolbar color="primary">
   <mat-toolbar-row>
-    <div class="toolBarLeft">
-      <mat-icon>create</mat-icon>
-      <span class="webTitle">笔记</span>
+    <div class="toolBar">
+      <div class="toolBarLeft">
+        <mat-icon>create</mat-icon>
+        <span class="webTitle">
+          <a class="webName" routerLink="/pages/home">
+            笔记
+          </a>
+        </span>
+      </div>
+      <div class="toolBarRight">
+        <div class="user">
+          <div class="userPhone">
+            <img src="../../../assets/img/photo.png" alt="">
+          </div>
+          <span>david</span>
+        </div>
+        <div>
+          <a routerLink="/pages/login">登录</a>
+        </div>
+        <div>
+          <a routerLink="/pages/register">注册</a>
+        </div>
+        <div>
+          <a routerLink="/pages/add">发布</a>
+        </div>
+        <div class="offLine">注销</div>
+      </div>
     </div>
   </mat-toolbar-row>
 </mat-toolbar>
