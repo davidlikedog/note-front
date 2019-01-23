@@ -1,6 +1,14 @@
+mat-toolbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 2;
+}
+
 mat-sidenav-container {
   min-height: calc(100% - 64px);
   height: auto !important;
+  background: #f7f1f5;
 }
 
 .toolBar {
@@ -69,4 +77,50 @@ mat-sidenav-container {
   &:hover {
     color: #c1c1c1;
   }
+}
+
+.layout-footer {
+  padding: 12px;
+  font-size: 12px;
+}
+
+footer {
+  background: #673ab7;
+  color: white;
+  .footerBox {
+    display: flex;
+    align-items: center;
+    padding: 8px;
+    .footerLeft {
+      display: flex;
+      align-items: center;
+      flex: 1;
+      .icon {
+        font-size: 28px;
+      }
+      span {
+        font-size: 16px;
+        margin-left: 10px;
+      }
+    }
+    .footerCenter {
+      flex: 1;
+      text-align: center;
+    }
+    .footerRight {
+      display: flex;
+      justify-content: flex-end;
+      flex: 1;
+      flex-direction: column;
+      text-align: right;
+      a {
+        color: #ffffff;
+        text-decoration: none;
+      }
+    }
+  }
+}
+
+.site {
+  margin-top: 64px;
 }

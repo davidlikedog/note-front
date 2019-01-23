@@ -1,17 +1,18 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, OnDestroy} from '@angular/core';
 import {HttpService} from '../../service/httpService/http.service';
 import {Md5} from 'ts-md5';
 import {FormControl, Validators} from '@angular/forms';
 import {LoginData} from '../../interface/interface';
 import {Router} from '@angular/router';
 import {MessageAlertService} from '../../service/messageAlertService/message-alert.service';
+import {FootControlService} from '../../service/footControlService/foot-control.service';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.less']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, OnDestroy {
   protected height: number;
   accountValue = new FormControl('', [Validators.required]);
   passwordValue = new FormControl('', [Validators.required]);
@@ -21,6 +22,7 @@ export class LoginComponent implements OnInit {
     private service: HttpService,
     private router: Router,
     private msgAlert: MessageAlertService,
+    private foot: FootControlService,
   ) {
     this.height = 0;
     this.disablesLoginBtn = false;
@@ -28,6 +30,11 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     this.height = window.innerHeight - 64;
+    this.foot.showFooter.emit(false);
+  }
+
+  ngOnDestroy() {
+    this.foot.showFooter.emit(true);
   }
 
   login() {

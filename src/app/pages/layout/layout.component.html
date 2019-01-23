@@ -1,5 +1,5 @@
 <!--<div>-->
-  <!--<mat-progress-bar mode="indeterminate" color="warn"></mat-progress-bar>-->
+<!--<mat-progress-bar mode="indeterminate" color="warn"></mat-progress-bar>-->
 <!--</div>-->
 
 <mat-toolbar color="primary">
@@ -38,10 +38,10 @@
 <mat-sidenav-container>
 
   <!--<mat-sidenav #sidenav class="mine-nav">-->
-    <!--<p>hello</p>-->
+  <!--<p>hello</p>-->
   <!--</mat-sidenav>-->
 
-  <div class="site">
+  <div [ngStyle.xs]="{'margin-top.px':56}" class="site">
     <main>
       <ng-content select="router-outlet"></ng-content>
     </main>
@@ -49,6 +49,22 @@
 
 </mat-sidenav-container>
 
-<!--<footer>-->
-  <!--this is footer-->
-<!--</footer>-->
+<footer *ngIf="showFooter" class="layout-footer">
+  <div class="footerBox">
+    <div class="footerLeft">
+      <mat-icon class="icon">create</mat-icon>
+      <span>笔记</span>
+    </div>
+    <div class="footerCenter">
+      <span>version:1.0.0</span>
+    </div>
+    <div class="footerRight">
+      <div>
+        <a href="#">蜀ICP备17039954号-1</a>
+      </div>
+      <div>
+        <a href="#">蜀公网安备51050302000084</a>
+      </div>
+    </div>
+  </div>
+</footer>
