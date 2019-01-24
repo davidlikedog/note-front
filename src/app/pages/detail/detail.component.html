@@ -1,3 +1,71 @@
-<p>
-  detail works!
-</p>
+<div [ngStyle.xs]="{'width':'100%'}" class="addBox">
+  <div class="add">
+    <div class="addNav">
+      首页 / 文章详情
+    </div>
+
+    <div class="detailBody">
+      <div class="title">文章标题</div>
+      <div class="dateAndAuthor">雨城 2019.01.23 10：28</div>
+      <div class="description">听说所有的雨季过后都会出现彩虹</div>
+      <div class="content">
+        听说所有的雨季过后都会出现彩虹,也听说雨后的池塘会有鱼儿吐泡泡，忽然觉得然而这时间这么美好，
+        或许所 谓的美好就是建立在杀戮之上的，希望明天会更好吧！Lorem ipsum dolor sit amet, consectetur adipisicing el
+        it. At cum fuga modi nam necessitatibus nesciunt quae quod vero. Aliquam mollitia nihil placeat qui rem sint
+        tempora tenetur. Fuga necessitatibus, voluptatum.
+      </div>
+
+      <div class="moreAction">
+        <div class="oneAction">
+          <mat-icon>visibility</mat-icon>
+          <span>0</span>
+        </div>
+        <div class="oneAction">
+          <mat-icon>thumb_up_alt</mat-icon>
+          <span>0</span>
+        </div>
+        <div class="oneAction">
+          <mat-icon [matMenuTriggerFor]="menu1">more_vert</mat-icon>
+          <mat-menu #menu1="matMenu">
+            <button mat-menu-item>
+              <mat-icon class="moreIcon">edit</mat-icon>
+              <span class="moreText">修改1</span>
+            </button>
+            <button mat-menu-item>
+              <mat-icon class="moreIcon">delete</mat-icon>
+              <span class="moreText">删除</span>
+            </button>
+          </mat-menu>
+        </div>
+      </div>
+
+      <div class="comments">
+        <div>评论(100)：</div>
+
+        <div class="input">
+          <mat-form-field class="example-full-width">
+            <input type="text" matInput placeholder="enter sth">
+            <button mat-button matSuffix>
+              <mat-icon class="sendComments">send</mat-icon>
+            </button>
+          </mat-form-field>
+        </div>
+
+        <div class="commentsList">
+          <app-comments type="comments"></app-comments>
+          <div class="reply">
+            <app-comments type="reply"></app-comments>
+          </div>
+        </div>
+
+        <div class="commentsList">
+          <app-comments type="comments"></app-comments>
+          <div class="reply">
+            <app-comments type="reply"></app-comments>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

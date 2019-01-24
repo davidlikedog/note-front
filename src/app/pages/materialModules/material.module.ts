@@ -10,6 +10,10 @@ import {
   MatToolbarModule,
   MatProgressBarModule,
   MatMenuModule,
+  MatBottomSheetModule,
+  MatCheckboxModule,
+  MatDialogModule,
+  MatRadioModule,
 } from '@angular/material';
 
 
@@ -24,6 +28,10 @@ import {
     MatToolbarModule,
     MatProgressBarModule,
     MatMenuModule,
+    MatBottomSheetModule,
+    MatCheckboxModule,
+    MatDialogModule,
+    MatRadioModule,
   ],
   declarations: [],
   exports: [
@@ -35,6 +43,10 @@ import {
     MatToolbarModule,
     MatProgressBarModule,
     MatMenuModule,
+    MatBottomSheetModule,
+    MatCheckboxModule,
+    MatDialogModule,
+    MatRadioModule,
   ],
 })
 export class MaterialModule { }

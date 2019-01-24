@@ -1,0 +1,132 @@
+.calDetailCss(@width, @marginTop) {
+  .detailBody {
+    text-align: center;
+    //padding: 58px 86px;
+    padding: @width @width+20;
+
+    .title {
+      color: #414141;
+      font-size: 24px;
+    }
+
+    .dateAndAuthor {
+      color: #9a9a9a;
+      margin-top: @marginTop;
+      font-size: 12px;
+    }
+
+    .description {
+      color: #828282;
+      margin-top: @marginTop;
+    }
+
+    .content {
+      color: #6b6b6b;
+      margin-top: @marginTop+24;
+      text-align: left;
+      text-indent: 2em;
+    }
+  }
+}
+
+.addBox {
+  width: 80%;
+  margin: 0 auto;
+  &::before {
+    content: ' ';
+    display: table;
+    clear: both;
+  }
+
+  .add {
+    margin: 40px auto;
+    background: #fcfaff;
+  }
+
+  .addNav {
+    padding: 14px 20px;
+    border-bottom: 1px solid #673ab7;
+    color: #a17de1;
+    font-weight: 600;
+  }
+
+  .calDetailCss(56px, 14px);
+
+  .moreAction {
+    margin-top: 80px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+
+    .oneAction {
+      min-width: 80px;
+      color: #9782be;
+      display: flex;
+      align-items: center;
+
+      span {
+        margin-left: 10px;
+      }
+
+      &:nth-child(2) {
+        cursor: pointer;
+      }
+
+      &:last-child {
+        min-width: auto;
+        cursor: pointer;
+      }
+    }
+
+    .oneAction + .oneAction {
+      margin-left: 20px;
+    }
+  }
+
+  .comments {
+    margin-top: 25px;
+    text-align: left;
+    color: #6b6b6b;
+    .sendComments {
+      color: #9782be;
+    }
+
+    .input {
+      padding: 8px 20px;
+      background: #ffffff;
+      margin-top: 20px;
+      -webkit-border-radius: 10px;
+      -moz-border-radius: 10px;
+      border-radius: 10px;
+    }
+
+    .input > * {
+      width: 100%;
+    }
+
+    .commentsList {
+      margin-top: 20px;
+    }
+
+    .reply {
+      width: calc(100% - 50px);
+      margin-left: 50px;
+      margin-top: 10px;
+    }
+  }
+
+}
+
+.moreIcon {
+  color: #9782be;
+}
+
+.moreText {
+  color: #686868;
+}
+
+@media (max-width: 768px) {
+  .addBox {
+    .calDetailCss(16px, 10px)
+  }
+}

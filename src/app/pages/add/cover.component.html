@@ -1,0 +1,38 @@
+<h2 mat-dialog-title>choose one</h2>
+<mat-dialog-content>
+  <mat-radio-group class="setStyle" [(ngModel)]="coverImg">
+    <mat-radio-button name="cover" [value]="1">
+      <div class="fixImg">
+        <img src="../../../assets/coverImg/a.jpg" alt="">
+      </div>
+    </mat-radio-button>
+    <mat-radio-button name="cover" [value]="2">
+      <div class="fixImg">
+        <img src="../../../assets/coverImg/b.jpg" alt="">
+      </div>
+    </mat-radio-button>
+    <mat-radio-button name="cover" [value]="3">
+      <div class="fixImg">
+        <img src="../../../assets/coverImg/c.jpg" alt="">
+      </div>
+    </mat-radio-button>
+    <mat-radio-button name="cover" [value]="4">
+      <div class="fixImg">
+        <img src="../../../assets/coverImg/d.jpg" alt="">
+      </div>
+    </mat-radio-button>
+    <mat-radio-button name="cover" [value]="5">
+      <div class="fixImg">
+        <img src="../../../assets/coverImg/e.jpg" alt="">
+      </div>
+    </mat-radio-button>
+    <mat-radio-button name="cover" [value]="4">
+      <div class="fixImg">
+        <img src="../../../assets/coverImg/f.jpg" alt="">
+      </div>
+    </mat-radio-button>
+  </mat-radio-group>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button (click)="getValue()">test value</button>
+</mat-dialog-actions>

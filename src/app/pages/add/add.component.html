@@ -1,3 +1,67 @@
-<p>
-  add works!
-</p>
+<div [ngStyle.xs]="{'width':'100%'}" class="addBox">
+  <div class="add">
+    <div class="addNav">
+      首页 / 添加文章
+    </div>
+
+    <div class="addContainer">
+
+      <div class="oneInput">
+        <h4 class="titleName">标题：</h4>
+        <mat-form-field appearance="outline">
+          <mat-label>标题</mat-label>
+          <input matInput type="text" placeholder="请填写标题" required>
+          <mat-error>error</mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="oneInput">
+        <h4 class="titleName">简介：</h4>
+        <mat-form-field appearance="outline">
+          <mat-label>简介</mat-label>
+          <input matInput type="text" placeholder="请填写简介" required>
+          <mat-error>error</mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="fixWidth">
+        <h4 class="titleName">封面：</h4>
+        <div class="chooseCover">
+          <div class="upload">
+            <button mat-stroked-button color="primary">上传</button>
+            <input style="display: none" type="file">
+          </div>
+          <div>上传新图片 or 从右边选择一张图片</div>
+          <div>
+            <button mat-stroked-button color="primary" (click)="openDialog()">打开</button>
+          </div>
+        </div>
+
+        <div [ngClass]="{'noCover':!chooseCover}" class="showCover">
+          <span *ngIf="!chooseCover">尚未选择封面</span>
+          <img *ngIf="chooseCover" src="" alt="">
+        </div>
+      </div>
+
+      <div class="oneInput">
+        <h4 class="titleName">设置为个人可见：</h4>
+        <mat-checkbox color="primary">
+          是
+        </mat-checkbox>
+      </div>
+
+      <div class="oneInput">
+        <h4 class="titleName">内容：</h4>
+        <ckeditor [editor]="Editor" [(ngModel)]="model.editorData"></ckeditor>
+      </div>
+
+      <div class="fixWidth">
+        <button mat-raised-button color="primary">提交</button>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+
