@@ -1,0 +1,26 @@
+<div class="mainComments">
+  <div class="commentsPhoto">
+    <img src="../../../../assets/img/photo.png" alt="">
+  </div>
+  <div class="commentsRight">
+    <div class="firstLine">
+      <a routerLink="#">雨城：</a>
+      <a *ngIf="type==='reply'" routerLink="#">@david</a>
+      <span class="commentsContent">或许最无情莫过于人 Lorem ipsum dolor sit amet, consectetur adipisicing elit. A ab ad aliquid culpa cupiditate doloremque, enim eveniet hic, impedit incidunt ipsam maxime nesciunt numquam officia officiis porro, quaerat reiciendis voluptatem!</span>
+    </div>
+    <div class="secondLine">
+      <div class="year">
+        2019.01.23 10:52
+      </div>
+      <div class="moreDetail">
+        <div class="first">
+          <mat-icon>thumb_up_alt</mat-icon>
+          <span>0</span>
+        </div>
+        <div class="second" (click)="openReply()">
+          回复
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

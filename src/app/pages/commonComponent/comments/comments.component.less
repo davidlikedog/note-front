@@ -1,0 +1,76 @@
+.mainComments {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.reply {
+  width: calc(100% - 50px);
+  margin-left: 50px;
+  margin-top: 10px;
+}
+
+@photoWidth: 30px;
+.commentsPhoto {
+  width: @photoWidth;
+  height: @photoWidth;
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+.commentsRight {
+  width: calc(100% - @photoWidth);
+  margin-left: 20px;
+}
+
+.commentsContent {
+  color: #6b6b6b;
+}
+
+.secondLine {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 6px;
+
+  > .year {
+    font-size: 12px;
+    color: #979797;
+  }
+
+  .moreDetail {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+
+    > .first {
+      display: flex;
+      align-items: center;
+      margin-right: 10px;
+
+      > mat-icon {
+        width: 100%;
+        height: 100%;
+        font-size: 18px;
+        color: #9782be;
+        cursor: pointer;
+      }
+
+      > span {
+        margin-left: 10px;
+        min-width: 60px;
+      }
+    }
+
+    > .second {
+      color: #9782be;
+      cursor: pointer;
+      &:hover {
+        color: #a069be;
+      }
+    }
+  }
+}
