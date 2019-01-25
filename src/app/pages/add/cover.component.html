@@ -1,32 +1,32 @@
-<h2 mat-dialog-title>choose one</h2>
+<h2 mat-dialog-title>选择一张图片</h2>
 <mat-dialog-content>
   <mat-radio-group class="setStyle" [(ngModel)]="coverImg">
-    <mat-radio-button name="cover" [value]="1">
+    <mat-radio-button name="cover" [value]="'a.jpg'">
       <div class="fixImg">
         <img src="../../../assets/coverImg/a.jpg" alt="">
       </div>
     </mat-radio-button>
-    <mat-radio-button name="cover" [value]="2">
+    <mat-radio-button name="cover" [value]="'b.jpg'">
       <div class="fixImg">
         <img src="../../../assets/coverImg/b.jpg" alt="">
       </div>
     </mat-radio-button>
-    <mat-radio-button name="cover" [value]="3">
+    <mat-radio-button name="cover" [value]="'c.jpg'">
       <div class="fixImg">
         <img src="../../../assets/coverImg/c.jpg" alt="">
       </div>
     </mat-radio-button>
-    <mat-radio-button name="cover" [value]="4">
+    <mat-radio-button name="cover" [value]="'d.jpg'">
       <div class="fixImg">
         <img src="../../../assets/coverImg/d.jpg" alt="">
       </div>
     </mat-radio-button>
-    <mat-radio-button name="cover" [value]="5">
+    <mat-radio-button name="cover" [value]="'e.jpg'">
       <div class="fixImg">
         <img src="../../../assets/coverImg/e.jpg" alt="">
       </div>
     </mat-radio-button>
-    <mat-radio-button name="cover" [value]="4">
+    <mat-radio-button name="cover" [value]="'f.jpg'">
       <div class="fixImg">
         <img src="../../../assets/coverImg/f.jpg" alt="">
       </div>
@@ -34,5 +34,6 @@
   </mat-radio-group>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
-  <button mat-button (click)="getValue()">test value</button>
+  <button mat-stroked-button class="cancel" (click)="onNoClick()">取消</button>
+  <button mat-stroked-button [mat-dialog-close]="coverImg" color="primary" cdkFocusInitial>确认</button>
 </mat-dialog-actions>

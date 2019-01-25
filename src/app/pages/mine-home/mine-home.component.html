@@ -1,0 +1,169 @@
+<div class="body" [ngStyle.xs]="{'width':'100%','padding.px':'0 10'}">
+  <div class="homeBox" fxLayout="column" fxLayoutAlign="center start" fxLayoutAlign.xs="start">
+    <div class="photo">
+      <img src="../../../assets/img/photo.png" alt="">
+    </div>
+
+    <div class="name">雨城</div>
+    <div class="email">123@qq.com</div>
+    <div class="sign">这个人懒得烧蛇吃，什么也没留下</div>
+    <div class="tabs">
+      <mat-tab-group mat-align-tabs="center">
+
+        <mat-tab label="我的发布">
+          <div class="one">
+            <app-one-article></app-one-article>
+          </div>
+          <div class="one">
+            <app-one-article></app-one-article>
+          </div>
+        </mat-tab>
+
+        <mat-tab label="与我相关">
+          <div class="one">
+            <mat-card class="aboutMe">
+              <mat-card-header class="cardHeader">
+                <div class="photoImg" mat-card-avatar>
+                  <img src="../../../assets/img/photo.png" alt="">
+                </div>
+                <mat-card-title class="author">雨城</mat-card-title>
+                <mat-card-subtitle>
+                  <span class="createTime">2019,01.25 19:47</span>
+                </mat-card-subtitle>
+                <div class="reply">
+                  <button mat-button>回复</button>
+                </div>
+              </mat-card-header>
+              <mat-card-content>
+                <div class="talkContent">这是谈话内容</div>
+                <div class="articleBody">
+                  <div class="cover">
+                    <img src="../../../assets/img/bg.jpg" alt="">
+                  </div>
+                  <div class="detail">
+                    <div class="articleTitle">听说今晚月色很美</div>
+                    <div [style.-webkit-box-orient]="'vertical'" class="articleDescription">不知阁下是否有时间一起出来赏月先</div>
+                  </div>
+                </div>
+              </mat-card-content>
+              <mat-card-actions>
+                <div class="commentsList">
+                  <app-comments type="comments"></app-comments>
+                  <div class="commentsReply">
+                    <app-comments type="reply"></app-comments>
+                  </div>
+                </div>
+              </mat-card-actions>
+            </mat-card>
+          </div>
+
+          <div class="one">
+            <mat-card class="aboutMe">
+              <mat-card-header class="cardHeader">
+                <div class="photoImg" mat-card-avatar>
+                  <img src="../../../assets/img/photo.png" alt="">
+                </div>
+                <mat-card-title class="author">雨城</mat-card-title>
+                <mat-card-subtitle>
+                  <span class="createTime">2019,01.25 19:47</span>
+                </mat-card-subtitle>
+                <div class="reply">
+                  <button mat-button>回复</button>
+                </div>
+              </mat-card-header>
+              <mat-card-content>
+                <div class="talkContent">这是谈话内容</div>
+                <div class="articleBody">
+                  <div class="cover">
+                    <img src="../../../assets/img/bg.jpg" alt="">
+                  </div>
+                  <div class="detail">
+                    <div class="articleTitle">听说今晚月色很美</div>
+                    <div [style.-webkit-box-orient]="'vertical'" class="articleDescription">不知阁下是否有时间一起出来赏月先</div>
+                  </div>
+                </div>
+              </mat-card-content>
+              <mat-card-actions>
+                <div class="commentsList">
+                  <app-comments type="comments"></app-comments>
+                  <div class="commentsReply">
+                    <app-comments type="reply"></app-comments>
+                  </div>
+                </div>
+              </mat-card-actions>
+            </mat-card>
+          </div>
+        </mat-tab>
+
+        <mat-tab label="我的留言">
+          <div class="one">
+            <mat-card class="aboutMe">
+              <mat-card-header class="cardHeader">
+                <div class="photoImg" mat-card-avatar>
+                  <img src="../../../assets/img/photo.png" alt="">
+                </div>
+                <mat-card-title class="author">雨城</mat-card-title>
+                <mat-card-subtitle>
+                  <span class="createTime">2019,01.25 19:47</span>
+                </mat-card-subtitle>
+                <div class="reply">
+                  <button mat-button>回复</button>
+                </div>
+              </mat-card-header>
+              <mat-card-content>
+                <div class="talkContent">这是谈话内容</div>
+              </mat-card-content>
+              <mat-card-actions>
+                <div class="replyMsg">雨城：太阳东升</div>
+              </mat-card-actions>
+            </mat-card>
+          </div>
+        </mat-tab>
+
+        <mat-tab label="我的访客">
+          <mat-list role="list">
+            <mat-list-item role="listitem">
+              <div class="visitor">
+                <div class="photoName">
+                  <div class="visitorImg">
+                    <img src="../../../assets/img/photo.png" alt="">
+                  </div>
+                  <div class="visitorName">david</div>
+                </div>
+                <div class="when">2019.01.25 21:45</div>
+              </div>
+            </mat-list-item>
+          </mat-list>
+
+          <mat-list role="list">
+            <mat-list-item role="listitem">
+              <div class="visitor">
+                <div class="photoName">
+                  <div class="visitorImg">
+                    <img src="../../../assets/img/photo.png" alt="">
+                  </div>
+                  <div class="visitorName">david</div>
+                </div>
+                <div class="when">2019.01.25 21:45</div>
+              </div>
+            </mat-list-item>
+          </mat-list>
+
+          <mat-list role="list">
+            <mat-list-item role="listitem">
+              <div class="visitor">
+                <div class="photoName">
+                  <div class="visitorImg">
+                    <img src="../../../assets/img/photo.png" alt="">
+                  </div>
+                  <div class="visitorName">david</div>
+                </div>
+                <div class="when">2019.01.25 21:45</div>
+              </div>
+            </mat-list-item>
+          </mat-list>
+        </mat-tab>
+      </mat-tab-group>
+    </div>
+  </div>
+</div>

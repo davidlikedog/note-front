@@ -28,18 +28,19 @@
         <h4 class="titleName">封面：</h4>
         <div class="chooseCover">
           <div class="upload">
-            <button mat-stroked-button color="primary">上传</button>
-            <input style="display: none" type="file">
+            <button (click)="imgFile.click()" mat-stroked-button color="primary">上传</button>
+            <input #imgFile (change)="fileChange($event)" style="display: none" type="file">
           </div>
-          <div>上传新图片 or 从右边选择一张图片</div>
+          <div class="coverNotice">上传新图片 <span>or</span> 从右边选择一张图片</div>
           <div>
             <button mat-stroked-button color="primary" (click)="openDialog()">打开</button>
           </div>
         </div>
 
         <div [ngClass]="{'noCover':!chooseCover}" class="showCover">
-          <span *ngIf="!chooseCover">尚未选择封面</span>
-          <img *ngIf="chooseCover" src="" alt="">
+          <span *ngIf="coverImg===''">尚未选择封面</span>
+          <img *ngIf="coverImg!==''" [src]="coverImgType && coverImgType === 'upload' ?
+          uploadImg.bypassSecurityTrustUrl(coverImg) : '../../../assets/coverImg/' + coverImg" alt="">
         </div>
       </div>
 
@@ -52,7 +53,7 @@
 
       <div class="oneInput">
         <h4 class="titleName">内容：</h4>
-        <ckeditor [editor]="Editor" [(ngModel)]="model.editorData"></ckeditor>
+        <ckeditor [config]="editConfig" [editor]="Editor" [(ngModel)]="model.editorData"></ckeditor>
       </div>
 
       <div class="fixWidth">

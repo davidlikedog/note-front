@@ -9,6 +9,7 @@ import {PagesComponent} from './pages.component';
 import {AddComponent} from './add/add.component';
 import {ModifyComponent} from './modify/modify.component';
 import {DetailComponent} from './detail/detail.component';
+import {MineHomeComponent} from './mine-home/mine-home.component';
 
 import {VerifyLogin} from './verify/verifyLogin/verifyLogin';
 
@@ -24,6 +25,7 @@ const routes: Routes = [
       {path: 'login', component: LoginComponent},
       {path: 'register', component: RegisterComponent},
       {path: 'add', component: AddComponent, canActivate: [VerifyLogin]},
+      {path: 'mine', component: MineHomeComponent, canActivate: [VerifyLogin]},
       {path: 'modify/:id', component: ModifyComponent, canActivate: [VerifyLogin]},
       {path: '**', component: NotFoundComponent},
     ]

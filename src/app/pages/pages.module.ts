@@ -22,6 +22,8 @@ import {CommentsComponent} from './commonComponent/comments/comments.component';
 import {CoverComponent} from './add/add.component';
 
 import {VerifyLogin} from './verify/verifyLogin/verifyLogin';
+import { OneArticleComponent } from './commonComponent/one-article/one-article.component';
+import { MineHomeComponent } from './mine-home/mine-home.component';
 
 @NgModule({
   imports: [
@@ -47,6 +49,8 @@ import {VerifyLogin} from './verify/verifyLogin/verifyLogin';
     CommentsComponent,
     ReplyComponent,
     CoverComponent,
+    OneArticleComponent,
+    MineHomeComponent,
   ],
   providers: [
     VerifyLogin
