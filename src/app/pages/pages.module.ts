@@ -20,10 +20,12 @@ import {LayoutComponent} from './layout/layout.component';
 import {ReplyComponent} from './commonComponent/comments/comments.component';
 import {CommentsComponent} from './commonComponent/comments/comments.component';
 import {CoverComponent} from './add/add.component';
-
-import {VerifyLogin} from './verify/verifyLogin/verifyLogin';
 import { OneArticleComponent } from './commonComponent/one-article/one-article.component';
 import { MineHomeComponent } from './mine-home/mine-home.component';
+
+import {VerifyLogin} from './verify/verifyLogin/verifyLogin';
+
+import {PreventEventDirective} from '../directive/prevent-event.directive';
 
 @NgModule({
   imports: [
@@ -51,6 +53,7 @@ import { MineHomeComponent } from './mine-home/mine-home.component';
     CoverComponent,
     OneArticleComponent,
     MineHomeComponent,
+    PreventEventDirective,
   ],
   providers: [
     VerifyLogin

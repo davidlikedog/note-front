@@ -1,50 +1,50 @@
 <div class="oneArticle">
 
-  <a routerLink="/pages/detail/1">
+  <a routerLink="/pages/detail/{{oneArticle.id}}">
 
     <div class="articleHead">
       <div class="headLeft">
         <div class="photo">
-          <img src="../../../../assets/img/photo.png" alt="">
+          <img src="{{oneArticle.photo}}" alt="">
         </div>
-        <div class="name">雨城</div>
+        <div class="name">{{oneArticle.author}}</div>
       </div>
-      <div class="headRight">2019.01.22 10:38</div>
+      <div class="headRight">{{oneArticle.createTime | date: 'yyyy-MM-dd HH:mm:ss'}}</div>
     </div>
 
     <div class="articleBody">
       <div class="cover">
-        <img src="../../../../assets/img/bg.jpg" alt="">
+        <img src="{{oneArticle.cover}}" alt="">
       </div>
       <div class="detail">
-        <div class="articleTitle">听说今晚月色很美</div>
-        <div [style.-webkit-box-orient]="'vertical'" class="articleDescription">不知阁下是否有时间一起出来赏月先</div>
+        <div class="articleTitle">{{oneArticle.title}}</div>
+        <div [style.-webkit-box-orient]="'vertical'" class="articleDescription">{{oneArticle.description}}</div>
       </div>
     </div>
 
-    <!--todo：观看人数，喜欢人数，评论人数只能显示4位，多出做1W+处理-->
+    <!--todo：观看人数，喜欢人数，评论人数只能显示4位，多出做1W+处理，自定义管道-->
     <div class="articleFoot">
       <div class="oneOperation">
         <mat-icon>visibility</mat-icon>
-        <span>0</span>
+        <span>{{oneArticle.read}}</span>
       </div>
       <div class="oneOperation">
         <mat-icon>thumb_up_alt</mat-icon>
-        <span>0</span>
+        <span>{{oneArticle.like}}</span>
       </div>
       <div class="oneOperation">
         <mat-icon>sms</mat-icon>
-        <span>0</span>
+        <span>{{oneArticle.comments}}</span>
       </div>
       <!--todo : when not login disabled more button-->
       <div class="oneOperation">
-        <mat-icon [matMenuTriggerFor]="menu">more_vert</mat-icon>
+        <mat-icon (click)="$event.stopPropagation();$event.preventDefault()" [matMenuTriggerFor]="menu">more_vert</mat-icon>
         <mat-menu #menu="matMenu">
-          <button mat-menu-item>
+          <button [disabled]="isLogin" mat-menu-item>
             <mat-icon class="moreIcon">edit</mat-icon>
             <span class="moreText">修改</span>
           </button>
-          <button mat-menu-item>
+          <button [disabled]="isLogin" mat-menu-item>
             <mat-icon class="moreIcon">delete</mat-icon>
             <span class="moreText">删除</span>
           </button>

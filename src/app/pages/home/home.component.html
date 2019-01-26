@@ -9,17 +9,13 @@
     <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center start" fxLayoutAlign.xs="start">
       <div [ngStyle.sm]="{'border-right':'none'}" [ngStyle.xs]="{'border-right':'none'}" class="item" fxFlex>
 
-        <div class="one">
-          <app-one-article></app-one-article>
+        <div *ngIf="articleList.length>0">
+          <div class="one" *ngFor="let oneArticle of articleList">
+            <app-one-article [oneArticle]="oneArticle"></app-one-article>
+          </div>
         </div>
 
-        <div class="one">
-          <app-one-article></app-one-article>
-        </div>
-
-        <div class="one">
-          <app-one-article></app-one-article>
-        </div>
+        <div *ngIf="articleList.length===0">没有更多。。。</div>
 
       </div>
       <div class="item" fxFlex="20%" fxShow.xs="false" fxShow.sm="false">

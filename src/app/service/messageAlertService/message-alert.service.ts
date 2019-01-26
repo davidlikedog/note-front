@@ -12,7 +12,7 @@ export class MessageAlertService {
   constructor(
     private msgAlert: MatSnackBar
   ) {
-    this.time = 1000;
+    this.time = 3000;
     this.actionButtonLabel = '确定';
     this.action = true;
   }

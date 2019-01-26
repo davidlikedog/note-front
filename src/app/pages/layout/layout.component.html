@@ -14,26 +14,26 @@
         </span>
       </div>
       <div class="toolBarRight">
-        <div>
+        <div *ngIf="isLogin">
           <a routerLink="/pages/mine">
             <div class="user">
               <div class="userPhone">
-                <img src="../../../assets/img/photo.png" alt="">
+                <img src="{{userData.photo}}" alt="">
               </div>
-              <span>david</span>
+              <span>{{userData.userName}}</span>
             </div>
           </a>
         </div>
-        <div>
+        <div *ngIf="!isLogin">
           <a routerLink="/pages/login">登录</a>
         </div>
-        <div>
+        <div *ngIf="!isLogin">
           <a routerLink="/pages/register">注册</a>
         </div>
-        <div>
+        <div *ngIf="isLogin">
           <a routerLink="/pages/add">发布</a>
         </div>
-        <div class="offLine">注销</div>
+        <div *ngIf="isLogin" (click)="offLine()" class="offLine">注销</div>
       </div>
     </div>
   </mat-toolbar-row>
