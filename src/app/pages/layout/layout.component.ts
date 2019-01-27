@@ -28,7 +28,7 @@ export class LayoutComponent implements OnInit {
       photo: string;
       token: string;
       userName: string;
-    };
+    }();
   }
 
   ngOnInit() {
@@ -37,15 +37,18 @@ export class LayoutComponent implements OnInit {
     });
     this.verifyLogin.isLogin.subscribe(value => {
       this.isLogin = value;
-    });
-    this.verifyLogin.saveUserData.subscribe(value => {
-      this.userData = value;
+      if (value) {
+        this.userData.photo = window.sessionStorage.getItem('userPhoto');
+        this.userData.userName = window.sessionStorage.getItem('userName');
+      }
     });
   }
 
   offLine() {
     this.verifyLogin.isLogin.emit(false);
     window.sessionStorage.removeItem('Authorization');
+    window.sessionStorage.removeItem('userPhoto');
+    window.sessionStorage.removeItem('userName');
     this.msgAlert.onceOk('已注销登录');
   }
 

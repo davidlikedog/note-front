@@ -49,19 +49,16 @@
           </mat-form-field>
         </div>
 
-        <div class="commentsList">
-          <app-comments type="comments"></app-comments>
-          <div class="reply">
-            <app-comments type="reply"></app-comments>
+        <div *ngIf="commentsList">
+          <div *ngFor="let oneComments of commentsList" class="commentsList">
+            <app-comments [commentsData]="oneComments" [type]="'comments'"></app-comments>
+            <div *ngIf="oneComments.replyResult" class="reply">
+              <app-comments *ngFor="let oneReply of oneComments.replyResult" [replyData]="oneReply" [type]="'reply'"></app-comments>
+            </div>
           </div>
         </div>
 
-        <div class="commentsList">
-          <app-comments type="comments"></app-comments>
-          <div class="reply">
-            <app-comments type="reply"></app-comments>
-          </div>
-        </div>
+        <div *ngIf="!commentsList">no comments</div>
 
       </div>
     </div>

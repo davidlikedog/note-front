@@ -42,10 +42,35 @@ export interface AllArticle {
   isLogin: boolean;
 }
 
+// 单条评论的数据格式
+export interface OneComments {
+  id: number;
+  content: string;
+  createTime: string;
+  userName: string;
+  photo: string;
+  likeNum: number;
+  replyResult: Array<OneReply> | null;
+}
+
+// 单条回复的数据格式
+export interface OneReply {
+  content: string;
+  createTime: string;
+  fromUserName: string;
+  fromUserPhoto: string;
+  toUserName: string;
+  toUserPhoto: string;
+  likeNum: number;
+}
+
 // 单条文章的数据格式
 export interface OneArticle {
   status: boolean;
   message: string;
-  data?: Array<Article>;
+  data?: {
+    articleResult: Array<Article>;
+    commentsResult: Array<OneComments> | null;
+  };
   isLogin: boolean;
 }

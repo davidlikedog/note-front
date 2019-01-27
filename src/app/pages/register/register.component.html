@@ -1,31 +1,52 @@
-<div class="bg" [ngStyle]="{'height.px':height}">
-  <div class="register">
-    <div class="circle">
-      <img src="../../../assets/img/photo.png" alt="">
-      <div class="photoText">头像</div>
-    </div>
-    <div class="formContainer">
-      <mat-form-field appearance="outline">
-        <mat-label>昵称</mat-label>
-        <input #account matInput type="text" placeholder="请输入账号">
-        <mat-hint style="color: #f44336;">昵称不能为空</mat-hint>
-      </mat-form-field>
-      <mat-form-field appearance="outline">
-        <mat-label>账号</mat-label>
-        <input #account matInput type="text" placeholder="请输入账号">
-        <mat-hint style="color: #f44336;">账号不能为空</mat-hint>
-      </mat-form-field>
-      <mat-form-field appearance="outline">
-        <mat-label>密码</mat-label>
-        <input #account matInput type="text" placeholder="请输入账号">
-        <mat-hint style="color: #f44336;">密码不能为空</mat-hint>
-      </mat-form-field>
-      <mat-form-field appearance="outline">
-        <mat-label>重复密码</mat-label>
-        <input #account matInput type="text" placeholder="请输入账号">
-        <mat-hint style="color: #f44336;">密码有误</mat-hint>
-      </mat-form-field>
-      <button class="moreTop" mat-raised-button color="primary">注册</button>
+<div class="bg">
+  <div class="addPadding">
+    <div [ngClass.xs]="'registerXs'" [ngClass.gt-xs]="'register'" class="commonRegister">
+      <div class="circle">
+        <img src="../../../assets/img/photo.png" alt="">
+        <div class="photoText">头像</div>
+      </div>
+      <div class="formContainer">
+        <mat-form-field appearance="outline">
+          <mat-label>昵称</mat-label>
+          <input [(formControl)]="nickName" matInput type="text" placeholder="请输入昵称" required>
+          <mat-error *ngIf="nickName.invalid">{{nickNameError()}}</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>账号</mat-label>
+          <input [(formControl)]="account" matInput type="text" placeholder="请输入账号" required>
+          <mat-error *ngIf="account.invalid">{{accountError()}}</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>邮箱</mat-label>
+          <input [(formControl)]="email" matInput type="text" placeholder="请输入邮箱" required>
+          <button mat-icon-button matSuffix color="primary">
+            <mat-icon matSuffix>send</mat-icon>
+          </button>
+          <mat-error *ngIf="email.invalid">{{emailError()}}</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>邮箱校验码</mat-label>
+          <input [(formControl)]="verifyCode" matInput type="text" placeholder="请输入四位数的校验码" required>
+          <mat-error *ngIf="verifyCode.invalid">{{verifyCodeError()}}</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>密码</mat-label>
+          <input [(formControl)]="password" matInput type="text" placeholder="请输入密码" required>
+          <mat-error *ngIf="password.invalid">{{passwordError()}}</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>重复密码</mat-label>
+          <input (keydown)="$event.keyCode === 13 && submit()" [(formControl)]="repeatPassword" matInput type="text" placeholder="请再次输入密码" required>
+          <mat-error *ngIf="repeatPassword.invalid">{{repeatPasswordError()}}</mat-error>
+        </mat-form-field>
+
+        <button class="moreTop" mat-raised-button (click)="submit()" color="primary">注册</button>
+      </div>
     </div>
   </div>
 </div>

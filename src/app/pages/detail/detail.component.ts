@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {HttpService} from '../../service/httpService/http.service';
-import {Article} from '../../interface/interface';
+import {Article, OneComments, OneReply} from '../../interface/interface';
 import {MessageAlertService} from '../../service/messageAlertService/message-alert.service';
 
 @Component({
@@ -11,6 +11,7 @@ import {MessageAlertService} from '../../service/messageAlertService/message-ale
 })
 export class DetailComponent implements OnInit {
   articleDetail: Article;
+  commentsList: Array<OneComments>;
 
   constructor(
     private route: ActivatedRoute,
@@ -28,15 +29,20 @@ export class DetailComponent implements OnInit {
       like: number;
       read: number;
       title: string;
-    };
+    }();
+    this.commentsList = [];
   }
 
   ngOnInit() {
     const id: string = this.route.snapshot.paramMap.get('id');
     this.httpService.getOneArticle(id).subscribe(value => {
-      console.log(value);
-      if ('status' in value && value.status && 'data' in value && value.data.length > 0) {
-        this.articleDetail = value.data[0];
+      if ('status' in value && value.status && 'data' in value && value.data) {
+        if ('articleResult' in value.data && value.data.articleResult && value.data.articleResult.length > 0) {
+          this.articleDetail = value.data.articleResult[0];
+        }
+        if ('commentsResult' in value.data) {
+          this.commentsList = value.data.commentsResult;
+        }
       } else {
         if ('message' in value) {
           this.msgAlert.onceErr(value.message);

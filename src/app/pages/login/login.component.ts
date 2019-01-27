@@ -6,7 +6,6 @@ import {LoginData} from '../../interface/interface';
 import {Router} from '@angular/router';
 import {MessageAlertService} from '../../service/messageAlertService/message-alert.service';
 import {FootControlService} from '../../service/footControlService/foot-control.service';
-import {VerifyLoginService} from '../../service/verifyLoginService/verify-login.service';
 
 @Component({
   selector: 'app-login',
@@ -14,7 +13,6 @@ import {VerifyLoginService} from '../../service/verifyLoginService/verify-login.
   styleUrls: ['./login.component.less']
 })
 export class LoginComponent implements OnInit, OnDestroy {
-  protected height: number;
   accountValue = new FormControl('', [Validators.required]);
   passwordValue = new FormControl('', [Validators.required]);
   disablesLoginBtn: boolean;
@@ -24,14 +22,11 @@ export class LoginComponent implements OnInit, OnDestroy {
     private router: Router,
     private msgAlert: MessageAlertService,
     private foot: FootControlService,
-    private verifyLogin: VerifyLoginService
   ) {
-    this.height = 0;
     this.disablesLoginBtn = false;
   }
 
   ngOnInit() {
-    this.height = window.innerHeight - 64;
     this.foot.showFooter.emit(false);
   }
 
@@ -55,8 +50,9 @@ export class LoginComponent implements OnInit, OnDestroy {
             this.msgAlert.hideWaiting();
             this.disablesLoginBtn = false;
           }, 500);
-          this.verifyLogin.saveUserData.emit(value.data);
           window.sessionStorage.setItem('Authorization', value.data.token);
+          window.sessionStorage.setItem('userPhoto', value.data.photo);
+          window.sessionStorage.setItem('userName', value.data.userName);
           this.router.navigateByUrl('/home');
         } else {
           if ('message' in value) {

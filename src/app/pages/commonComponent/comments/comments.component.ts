@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import {MatBottomSheet, MatBottomSheetRef} from '@angular/material';
+import {OneComments, OneReply} from '../../../interface/interface';
 
 @Component({
   selector: 'app-comments',
@@ -7,7 +8,9 @@ import {MatBottomSheet, MatBottomSheetRef} from '@angular/material';
   styleUrls: ['./comments.component.less']
 })
 export class CommentsComponent implements OnInit {
-  @Input() type: string;
+  @Input('type') type: string;
+  @Input('commentsData') commentsData: OneComments;
+  @Input('replyData') replyData: OneReply;
 
   constructor(
     private reply: MatBottomSheet

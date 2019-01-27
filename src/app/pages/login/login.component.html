@@ -1,20 +1,22 @@
-<div class="bg" [ngStyle]="{'height.px':height}">
+<div class="bg">
   <div class="moreHeight"></div>
-  <div class="loginBox">
-    <div class="title">登录</div>
-    <div class="innerBox">
-      <mat-form-field appearance="outline">
-        <mat-label>账号</mat-label>
-        <input #account [(formControl)]="accountValue" matInput type="text" placeholder="请输入账号" required>
-        <mat-error *ngIf="accountValue.hasError('required')">{{testAccountError()}}</mat-error>
-      </mat-form-field>
-      <mat-form-field appearance="outline">
-        <mat-label>密码</mat-label>
-        <input #password [(formControl)]="passwordValue" matInput type="password" placeholder="请输入密码" required>
-        <mat-error *ngIf="passwordValue.hasError('required')">{{testPasswordError()}}</mat-error>
-      </mat-form-field>
-      <div class="foot">
-        <button [disabled]="disablesLoginBtn" (click)="login()" mat-raised-button color="primary">登录</button>
+  <div class="addPadding">
+    <div class="loginBox commonLoginBox">
+      <div class="title">登录</div>
+      <div class="innerBox">
+        <mat-form-field appearance="outline">
+          <mat-label>账号</mat-label>
+          <input [(formControl)]="accountValue" matInput type="text" placeholder="请输入账号" required>
+          <mat-error *ngIf="accountValue.hasError('required')">{{testAccountError()}}</mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>密码</mat-label>
+          <input (keydown)="$event.keyCode === 13 && login()" [(formControl)]="passwordValue" matInput type="password" placeholder="请输入密码" required>
+          <mat-error *ngIf="passwordValue.hasError('required')">{{testPasswordError()}}</mat-error>
+        </mat-form-field>
+        <div class="foot">
+          <button [disabled]="disablesLoginBtn" (click)="login()" mat-raised-button color="primary">登录</button>
+        </div>
       </div>
     </div>
   </div>
