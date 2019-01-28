@@ -2,7 +2,16 @@ import {Injectable} from '@angular/core';
 import {URL} from '../../global-data/global-data';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable, of} from 'rxjs';
-import {LoginData, LoginResponse, AllArticle, OneArticle} from '../../interface/interface';
+import {
+  LoginData,
+  LoginResponse,
+  AllArticle,
+  OneArticle,
+  VerifyAccount,
+  EmailResponse,
+  RegisterResponse,
+  RegisterData
+} from '../../interface/interface';
 import {catchError, tap} from 'rxjs/operators';
 import {VerifyLoginService} from '../verifyLoginService/verify-login.service';
 import {MessageAlertService} from '../messageAlertService/message-alert.service';
@@ -68,6 +77,27 @@ export class HttpService {
           this.checkLogin(result);
         }),
         catchError(this.handleError<OneArticle>('login', {} as OneArticle))
+      );
+  }
+
+  verifyAccountOnly(account): Observable<VerifyAccount> {
+    return this.http.get<VerifyAccount>(`${this.url}/verifyAccount/${account}`)
+      .pipe(
+        catchError(this.handleError<VerifyAccount>('login', {} as VerifyAccount))
+      );
+  }
+
+  sendEmail(email): Observable<EmailResponse> {
+    return this.http.get<EmailResponse>(`${this.url}/sendEmail/${email}`)
+      .pipe(
+        catchError(this.handleError<EmailResponse>('login', {} as EmailResponse))
+      );
+  }
+
+  register(data: FormData): Observable<RegisterResponse> {
+    return this.http.post<RegisterResponse>(`${this.url}/register`, data)
+      .pipe(
+        catchError(this.handleError<RegisterResponse>('login', {} as RegisterResponse))
       );
   }
 

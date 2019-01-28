@@ -74,3 +74,37 @@ export interface OneArticle {
   };
   isLogin: boolean;
 }
+
+// 注册时检查账号是否唯一
+export interface VerifyAccount {
+  status: boolean;
+  message: string;
+  data?: {
+    isOnly: boolean;
+  };
+}
+
+// 注册时邮件接口返回值
+export interface EmailResponse {
+  status: boolean;
+  message: string;
+  data?: {
+    send: boolean;
+  };
+}
+
+// 注册时前端发送的数据
+export interface RegisterData {
+  photo: any;
+  account: string;
+  nickName: string;
+  email: string;
+  verifyCode: string;
+  password: string;
+}
+
+// 注册返回的数据
+export interface RegisterResponse {
+  status: boolean;
+  message: string;
+}

@@ -7,7 +7,7 @@ export class PicReturn {
   private readonly allPoint: Array<any>;
   private pointClassName: string;
   private readonly allPictureNormal: Array<any>;
-  private time: number;
+  private time: any;
   private currentIndex: number;
   private threeStyle: any = {
     left: null,
