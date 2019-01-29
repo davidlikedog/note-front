@@ -28,9 +28,10 @@
           <mat-form-field appearance="outline">
             <mat-label>邮箱</mat-label>
             <input formControlName="email" matInput type="email" placeholder="请输入邮箱" required>
-            <button mat-icon-button [disabled]="register.controls.email.invalid" title="发送邮件"
+            <button mat-icon-button [disabled]="register.controls.email.invalid || ifSend" title="发送邮件"
                     (click)="sendEmail($event)" matSuffix color="primary">
-              <mat-icon matSuffix>send</mat-icon>
+              <mat-icon *ngIf="!ifSend" matSuffix>send</mat-icon>
+              <span *ngIf="ifSend">{{seconds}}</span>
             </button>
             <mat-error *ngIf="register.controls.email.invalid">{{emailError()}}</mat-error>
           </mat-form-field>

@@ -4,19 +4,21 @@
     <div class="loginBox commonLoginBox">
       <div class="title">登录</div>
       <div class="innerBox">
-        <mat-form-field appearance="outline">
-          <mat-label>账号</mat-label>
-          <input [(formControl)]="accountValue" matInput type="text" placeholder="请输入账号" required>
-          <mat-error *ngIf="accountValue.hasError('required')">{{testAccountError()}}</mat-error>
-        </mat-form-field>
-        <mat-form-field appearance="outline">
-          <mat-label>密码</mat-label>
-          <input (keydown)="$event.keyCode === 13 && login()" [(formControl)]="passwordValue" matInput type="password" placeholder="请输入密码" required>
-          <mat-error *ngIf="passwordValue.hasError('required')">{{testPasswordError()}}</mat-error>
-        </mat-form-field>
-        <div class="foot">
-          <button [disabled]="disablesLoginBtn" (click)="login()" mat-raised-button color="primary">登录</button>
-        </div>
+        <form [formGroup]="loginForm" (submit)="OnSubmit(loginForm)">
+          <mat-form-field appearance="outline">
+            <mat-label>账号</mat-label>
+            <input formControlName="account" matInput type="text" placeholder="请输入账号" required>
+            <mat-error *ngIf="loginForm.controls.account.invalid">{{testAccountError()}}</mat-error>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>密码</mat-label>
+            <input formControlName="password" matInput type="password" placeholder="请输入密码" required>
+            <mat-error *ngIf="loginForm.controls.password.invalid">{{testPasswordError()}}</mat-error>
+          </mat-form-field>
+          <div class="foot">
+            <button [disabled]="disablesLoginBtn" type="submit" mat-raised-button color="primary">登录</button>
+          </div>
+        </form>
       </div>
     </div>
   </div>

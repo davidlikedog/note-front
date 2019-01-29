@@ -2,10 +2,11 @@ import {Component, OnInit, OnDestroy} from '@angular/core';
 import {FootControlService} from '../../service/footControlService/foot-control.service';
 import {HttpService} from '../../service/httpService/http.service';
 import {Md5} from 'ts-md5';
-import {FormBuilder, FormGroup, FormControl, Validators, ValidatorFn} from '@angular/forms';
+import {FormBuilder, FormGroup, Validators, ValidatorFn} from '@angular/forms';
 import {Router} from '@angular/router';
 import {MessageAlertService} from '../../service/messageAlertService/message-alert.service';
 import {DomSanitizer} from '@angular/platform-browser';
+import {LoginData} from '../../interface/interface';
 
 @Component({
   selector: 'app-register',
@@ -17,6 +18,8 @@ export class RegisterComponent implements OnInit, OnDestroy {
   accountIsOnly = true;
   coverImg = '';
   photoFile: File;
+  ifSend = false;
+  seconds = 60;
 
   constructor(
     private foot: FootControlService,
@@ -84,6 +87,19 @@ export class RegisterComponent implements OnInit, OnDestroy {
       this.httpService.sendEmail(email).subscribe(value => {
         if ('status' in value && value.status) {
           if ('data' in value && 'send' in value.data && value.data.send) {
+
+            // 发邮件成功发送后等待60s
+            this.ifSend = true;
+            this.seconds = 60;
+            const clock = setInterval(() => {
+              if (this.seconds > 0) {
+                this.seconds--;
+              } else {
+                clearInterval(clock);
+                this.ifSend = false;
+              }
+            }, 1000);
+
             if ('message' in value) {
               this.msgAlert.onceOk(value.message);
             }
@@ -175,10 +191,36 @@ export class RegisterComponent implements OnInit, OnDestroy {
       data.append('account', value.account);
       data.append('email', value.email);
       data.append('verifyCode', value.verifyCode);
-      data.append('password', value.password);
+      data.append('password', String(Md5.hashStr(value.password)));
       data.append('nickName', value.nickName);
       this.httpService.register(data).subscribe(result => {
-        console.log(result);
+        if ('status' in result && result.status) {
+          if ('message' in result) {
+            this.msgAlert.onceOk(result.message);
+            const loginData: LoginData = {
+              account: value.account,
+              password: String(Md5.hashStr(value.password))
+            };
+            this.httpService.login(loginData).subscribe(loginResult => {
+              if ('status' in loginResult && loginResult.status) {
+                if ('data' in loginResult && 'photo' in loginResult.data && 'userName' in loginResult.data) {
+                  window.sessionStorage.setItem('Authorization', loginResult.data.token);
+                  window.sessionStorage.setItem('userPhoto', loginResult.data.photo);
+                  window.sessionStorage.setItem('userName', loginResult.data.userName);
+                  this.router.navigateByUrl('/home');
+                }
+              } else {
+                if ('message' in loginResult) {
+                  this.msgAlert.onceErr(loginResult.message);
+                }
+              }
+            });
+          }
+        } else {
+          if ('message' in result) {
+            this.msgAlert.onceErr(result.message);
+          }
+        }
       });
     }
   }

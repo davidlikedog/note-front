@@ -1,7 +1,7 @@
 import {Component, OnInit, OnDestroy} from '@angular/core';
 import {HttpService} from '../../service/httpService/http.service';
 import {Md5} from 'ts-md5';
-import {FormControl, Validators} from '@angular/forms';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {LoginData} from '../../interface/interface';
 import {Router} from '@angular/router';
 import {MessageAlertService} from '../../service/messageAlertService/message-alert.service';
@@ -13,8 +13,7 @@ import {FootControlService} from '../../service/footControlService/foot-control.
   styleUrls: ['./login.component.less']
 })
 export class LoginComponent implements OnInit, OnDestroy {
-  accountValue = new FormControl('', [Validators.required]);
-  passwordValue = new FormControl('', [Validators.required]);
+  loginForm: FormGroup;
   disablesLoginBtn: boolean;
 
   constructor(
@@ -22,41 +21,55 @@ export class LoginComponent implements OnInit, OnDestroy {
     private router: Router,
     private msgAlert: MessageAlertService,
     private foot: FootControlService,
+    private fb: FormBuilder,
   ) {
     this.disablesLoginBtn = false;
   }
 
   ngOnInit() {
     this.foot.showFooter.emit(false);
+    this.loginForm = this.fb.group({
+      account: ['', [Validators.required, Validators.maxLength(20)]],
+      password: ['', [Validators.required, Validators.maxLength(30)]],
+    });
   }
 
   ngOnDestroy() {
     this.foot.showFooter.emit(true);
   }
 
-  login() {
+  OnSubmit({value, valid}) {
+    console.log('valid', valid);
+    console.log('value', value);
 
-    if (!this.accountValue.hasError('required') && !this.passwordValue.hasError('required')) {
+    if (valid) {
       const data: LoginData = {
-        account: this.accountValue.value,
-        password: String(Md5.hashStr(this.passwordValue.value)),
+        account: value.account,
+        password: String(Md5.hashStr(value.password)),
       };
 
       this.msgAlert.waiting('登录中...');
       this.disablesLoginBtn = true;
-      this.service.login(data).subscribe(value => {
-        if ('status' in value && 'data' in value && 'token' in value.data && value.status) {
+      this.service.login(data).subscribe(result => {
+        console.log(result);
+        if (
+          'status' in result && result.status &&
+          'data' in result &&
+          'token' in result.data &&
+          'userName' in result.data &&
+          'photo' in result.data
+        ) {
           setTimeout(() => {
             this.msgAlert.hideWaiting();
             this.disablesLoginBtn = false;
           }, 500);
-          window.sessionStorage.setItem('Authorization', value.data.token);
-          window.sessionStorage.setItem('userPhoto', value.data.photo);
-          window.sessionStorage.setItem('userName', value.data.userName);
+          window.sessionStorage.setItem('Authorization', result.data.token);
+          window.sessionStorage.setItem('userPhoto', result.data.photo);
+          window.sessionStorage.setItem('userName', result.data.userName);
           this.router.navigateByUrl('/home');
         } else {
-          if ('message' in value) {
-            this.msgAlert.onceErr(value.message);
+          if ('message' in result) {
+            this.msgAlert.onceErr(result.message);
             this.disablesLoginBtn = false;
           }
         }
@@ -66,12 +79,24 @@ export class LoginComponent implements OnInit, OnDestroy {
     }
   }
 
-  testAccountError() {
-    return this.accountValue.hasError('required') ? '账号不能为空' : '';
+  testAccountError(): string {
+    let result = '';
+    if (this.loginForm.controls.account.hasError('required')) {
+      result = '账号不能为空';
+    } else if (!this.loginForm.controls.account.hasError('maxLength')) {
+      result = '长度只能为20个字符';
+    }
+    return result;
   }
 
-  testPasswordError() {
-    return this.passwordValue.hasError('required') ? '密码不能为空' : '';
+  testPasswordError(): string {
+    let result = '';
+    if (this.loginForm.controls.password.hasError('required')) {
+      result = '密码不能为空';
+    } else if (!this.loginForm.controls.password.hasError('maxLength')) {
+      result = '长度只能为30个字符';
+    }
+    return result;
   }
 
 }
