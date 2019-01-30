@@ -6,6 +6,7 @@ import {LoginData} from '../../interface/interface';
 import {Router} from '@angular/router';
 import {MessageAlertService} from '../../service/messageAlertService/message-alert.service';
 import {FootControlService} from '../../service/footControlService/foot-control.service';
+import {VerifyLoginService} from '../../service/verifyLoginService/verify-login.service';
 
 @Component({
   selector: 'app-login',
@@ -22,6 +23,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     private msgAlert: MessageAlertService,
     private foot: FootControlService,
     private fb: FormBuilder,
+    private verifyLogin: VerifyLoginService
   ) {
     this.disablesLoginBtn = false;
   }
@@ -39,8 +41,6 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   OnSubmit({value, valid}) {
-    console.log('valid', valid);
-    console.log('value', value);
 
     if (valid) {
       const data: LoginData = {
@@ -51,7 +51,6 @@ export class LoginComponent implements OnInit, OnDestroy {
       this.msgAlert.waiting('登录中...');
       this.disablesLoginBtn = true;
       this.service.login(data).subscribe(result => {
-        console.log(result);
         if (
           'status' in result && result.status &&
           'data' in result &&
@@ -66,6 +65,7 @@ export class LoginComponent implements OnInit, OnDestroy {
           window.sessionStorage.setItem('Authorization', result.data.token);
           window.sessionStorage.setItem('userPhoto', result.data.photo);
           window.sessionStorage.setItem('userName', result.data.userName);
+          this.verifyLogin.isLogin.emit(true);
           this.router.navigateByUrl('/home');
         } else {
           if ('message' in result) {

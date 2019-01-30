@@ -22,7 +22,6 @@ export class LayoutComponent implements OnInit {
     private msgAlert: MessageAlertService
   ) {
     this.showFooter = true;
-    this.isLogin = false;
     this.userData = new class implements UserData {
       mail: string;
       photo: string;
@@ -32,6 +31,13 @@ export class LayoutComponent implements OnInit {
   }
 
   ngOnInit() {
+    if (window.sessionStorage.getItem('Authorization')) {
+      this.isLogin = true;
+      this.userData.photo = window.sessionStorage.getItem('userPhoto');
+      this.userData.userName = window.sessionStorage.getItem('userName');
+    } else {
+      this.isLogin = false;
+    }
     this.foot.showFooter.subscribe(value => {
       this.showFooter = value;
     });
@@ -40,6 +46,9 @@ export class LayoutComponent implements OnInit {
       if (value) {
         this.userData.photo = window.sessionStorage.getItem('userPhoto');
         this.userData.userName = window.sessionStorage.getItem('userName');
+      } else {
+        this.userData.photo = '';
+        this.userData.userName = '';
       }
     });
   }

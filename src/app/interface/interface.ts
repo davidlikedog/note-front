@@ -9,7 +9,7 @@ export interface UserData {
 export interface LoginResponse {
   status: boolean;
   message: string;
-  isLogin: boolean;
+  isLogin?: boolean;
   data?: UserData;
 }
 
@@ -39,7 +39,6 @@ export interface AllArticle {
   status: boolean;
   message: string;
   data?: Array<Article>;
-  isLogin: boolean;
 }
 
 // 单条评论的数据格式
@@ -72,7 +71,6 @@ export interface OneArticle {
     articleResult: Array<Article>;
     commentsResult: Array<OneComments> | null;
   };
-  isLogin: boolean;
 }
 
 // 注册时检查账号是否唯一
@@ -108,3 +106,25 @@ export interface RegisterResponse {
   status: boolean;
   message: string;
 }
+
+// 添加文章前端传输数据格式
+export interface AddArticleData {
+  title: string;
+  cover: any;
+  description: string;
+  content: string;
+  isPrivate: string;
+}
+
+// 添加文章后端返回的数据格式
+export interface AddArticleResponse {
+  status: boolean;
+  message: string;
+}
+
+// 删除文章后端返回接口
+export interface DeleteArticle {
+  status: boolean;
+  message: string;
+}
+

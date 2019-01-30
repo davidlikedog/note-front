@@ -74,7 +74,6 @@ export class RegisterComponent implements OnInit, OnDestroy {
     if (e.target.files.length > 0) {
       this.photoFile = e.target.files[0];
     }
-    console.log(this.photoFile);
     const file = e.srcElement.files[0];
     this.coverImg = window.URL.createObjectURL(file);
   }

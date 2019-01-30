@@ -10,8 +10,8 @@
         <h4 class="titleName">标题：</h4>
         <mat-form-field appearance="outline">
           <mat-label>标题</mat-label>
-          <input matInput type="text" placeholder="请填写标题" required>
-          <mat-error>error</mat-error>
+          <input [(ngModel)]="title" matInput type="text" placeholder="请填写标题" required maxlength="50">
+          <mat-error>标题不能为空</mat-error>
         </mat-form-field>
       </div>
 
@@ -19,8 +19,8 @@
         <h4 class="titleName">简介：</h4>
         <mat-form-field appearance="outline">
           <mat-label>简介</mat-label>
-          <input matInput type="text" placeholder="请填写简介" required>
-          <mat-error>error</mat-error>
+          <input [(ngModel)]="description" matInput type="text" placeholder="请填写简介" required maxlength="100">
+          <mat-error>简介不能为空</mat-error>
         </mat-form-field>
       </div>
 
@@ -37,16 +37,16 @@
           </div>
         </div>
 
-        <div [ngClass]="{'noCover':!chooseCover}" class="showCover">
+        <div [ngClass]="{'noCover':coverImg === ''}" class="showCover" [ngStyle]="coverImgType === '' ? {border:'1px solid #f44336'} : ''">
           <span *ngIf="coverImg===''">尚未选择封面</span>
           <img *ngIf="coverImg!==''" [src]="coverImgType && coverImgType === 'upload' ?
-          uploadImg.bypassSecurityTrustUrl(coverImg) : '../../../assets/coverImg/' + coverImg" alt="">
+            uploadImg.bypassSecurityTrustUrl(coverImg) : '../../../assets/coverImg/' + coverImg" alt="">
         </div>
       </div>
 
       <div class="oneInput">
         <h4 class="titleName">设置为个人可见：</h4>
-        <mat-checkbox color="primary">
+        <mat-checkbox [(ngModel)]="isPrivate" color="primary">
           是
         </mat-checkbox>
       </div>
@@ -57,7 +57,7 @@
       </div>
 
       <div class="fixWidth">
-        <button mat-raised-button color="primary">提交</button>
+        <button mat-raised-button type="submit" (click)="submit()" color="primary">提交</button>
       </div>
 
     </div>
