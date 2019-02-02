@@ -10,7 +10,7 @@ import {
   VerifyAccount,
   EmailResponse,
   RegisterResponse,
-  AddArticleResponse, DeleteArticle
+  AddArticleResponse, DeleteArticle, GetModifyArticleResponse, SaveModifyArticleData
 } from '../../interface/interface';
 import {catchError, tap} from 'rxjs/operators';
 import {VerifyLoginService} from '../verifyLoginService/verify-login.service';
@@ -58,6 +58,9 @@ export class HttpService {
   getAllArticle(): Observable<AllArticle> {
     return this.http.get<AllArticle>(`${this.url}/getAllArticle`)
       .pipe(
+        tap(result => {
+          this.checkLogin(result);
+        }),
         catchError(this.handleError<AllArticle>('login', {} as AllArticle))
       );
   }
@@ -65,6 +68,9 @@ export class HttpService {
   getOneArticle(id: string): Observable<OneArticle> {
     return this.http.get<OneArticle>(`${this.url}/getOneArticle/${id}`)
       .pipe(
+        tap(result => {
+          this.checkLogin(result);
+        }),
         catchError(this.handleError<OneArticle>('login', {} as OneArticle))
       );
   }
@@ -123,6 +129,40 @@ export class HttpService {
           this.checkLogin(result);
         }),
         catchError(this.handleError<DeleteArticle>('login', {} as DeleteArticle))
+      );
+  }
+
+  getModifyArticleData(id: number): Observable<GetModifyArticleResponse> {
+    const token = window.sessionStorage.getItem('Authorization');
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': `Bearer ${token}`,
+      })
+    };
+    return this.http.get<GetModifyArticleResponse>(`${this.url}/getModifyData/${id}`, httpOptions)
+      .pipe(
+        tap(result => {
+          this.checkLogin(result);
+        }),
+        catchError(this.handleError<GetModifyArticleResponse>('login', {} as GetModifyArticleResponse))
+      );
+  }
+
+  saveModifyArticleData(id: number, data: FormData): Observable<SaveModifyArticleData> {
+    const token = window.sessionStorage.getItem('Authorization');
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': `Bearer ${token}`,
+      })
+    };
+    return this.http.put<SaveModifyArticleData>(`${this.url}/saveModifyArticleData/${id}`, data, httpOptions)
+      .pipe(
+        tap(result => {
+          this.checkLogin(result);
+        }),
+        catchError(this.handleError<SaveModifyArticleData>('login', {} as SaveModifyArticleData))
       );
   }
 

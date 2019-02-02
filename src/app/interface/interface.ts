@@ -128,3 +128,20 @@ export interface DeleteArticle {
   message: string;
 }
 
+// 获取修改文章信息后端返回接口
+export interface GetModifyArticleResponse {
+  status: boolean;
+  message: string;
+  data?: {
+    title: string;
+    description: string;
+    cover: string;
+    content: string;
+    isPrivate: string;
+  };
+}
+
+export interface SaveModifyArticleData {
+  status: boolean;
+  message: string;
+}

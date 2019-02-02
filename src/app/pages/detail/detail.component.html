@@ -9,9 +9,7 @@
       <div class="dateAndAuthor">{{articleDetail.author}} {{articleDetail.createTime | date:'yyyy-MM-dd HH:mm:ss'}}
       </div>
       <div class="description">{{articleDetail.description}}</div>
-      <div class="content">
-        {{articleDetail.content}}
-      </div>
+      <div class="content ck-content" [innerHTML]="articleDetail.content"></div>
 
       <div class="moreAction">
         <div class="oneAction">

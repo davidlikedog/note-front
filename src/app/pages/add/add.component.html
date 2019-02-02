@@ -37,10 +37,13 @@
           </div>
         </div>
 
-        <div [ngClass]="{'noCover':coverImg === ''}" class="showCover" [ngStyle]="coverImgType === '' ? {border:'1px solid #f44336'} : ''">
+        <div [ngClass]="{'noCover':coverImg === ''}" class="showCover"
+             [ngStyle]="coverImg === '' ? {border:'1px solid #f44336'} : ''">
           <span *ngIf="coverImg===''">尚未选择封面</span>
           <img *ngIf="coverImg!==''" [src]="coverImgType && coverImgType === 'upload' ?
-            uploadImg.bypassSecurityTrustUrl(coverImg) : '../../../assets/coverImg/' + coverImg" alt="">
+            uploadImg.bypassSecurityTrustUrl(coverImg) :
+            coverImgType === 'add' ? ('../../../assets/coverImg/' + coverImg) : coverImg"
+               alt="">
         </div>
       </div>
 
@@ -53,7 +56,7 @@
 
       <div class="oneInput">
         <h4 class="titleName">内容：</h4>
-        <ckeditor [config]="editConfig" [editor]="Editor" [(ngModel)]="model.editorData"></ckeditor>
+        <ckeditor [config]="editConfig" [editor]="Editor" [(ngModel)]="model.editorData" (ready)="onReady($event)"></ckeditor>
       </div>
 
       <div class="fixWidth">
