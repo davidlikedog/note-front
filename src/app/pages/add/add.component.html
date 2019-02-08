@@ -42,7 +42,7 @@
           <span *ngIf="coverImg===''">尚未选择封面</span>
           <img *ngIf="coverImg!==''" [src]="coverImgType && coverImgType === 'upload' ?
             uploadImg.bypassSecurityTrustUrl(coverImg) :
-            coverImgType === 'add' ? ('../../../assets/coverImg/' + coverImg) : coverImg"
+            coverImgType === 'choose' ? ('../../../assets/coverImg/' + coverImg) : coverImg"
                alt="">
         </div>
       </div>

@@ -16,7 +16,7 @@
           <mat-icon>visibility</mat-icon>
           <span>{{articleDetail.read}}</span>
         </div>
-        <div class="oneAction">
+        <div (click)="like(articleDetail.id)" [ngClass]="{'like' : doILike}" class="oneAction">
           <mat-icon>thumb_up_alt</mat-icon>
           <span>{{articleDetail.like}}</span>
         </div>

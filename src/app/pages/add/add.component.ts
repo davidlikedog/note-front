@@ -14,7 +14,6 @@ import {URL} from '../../global-data/global-data';
   styleUrls: ['./add.component.less']
 })
 export class AddComponent implements OnInit {
-  public isAddOrUpdate: string;
   public Editor = ClassicEditor;
   public model = {
     editorData: '<p>Hello, world!1</p>'
@@ -22,6 +21,7 @@ export class AddComponent implements OnInit {
   public title = '';
   public description = '';
   public isPrivate = false;
+  public url = URL;
   private uploadCover: File;
   coverImg: string;
   coverImgType: string;
@@ -29,7 +29,7 @@ export class AddComponent implements OnInit {
     ckfinder: {
       // 返回的数据格式return json([‘uploaded’=>true,’url’=>$url]);
       // 自定义上传适配器来监听上传图片成功后的回调函数
-      uploadUrl: `${URL}/uploadImg`
+      uploadUrl: `${this.url}/uploadImg`
     },
   };
 
@@ -45,7 +45,7 @@ export class AddComponent implements OnInit {
     this.coverImgType = '';
   }
 
-  onReady( editor ) {
+  onReady(editor) {
     editor.ui.view.editable.element.parentElement.insertBefore(
       editor.ui.view.toolbar.element,
       editor.ui.view.editable.element
@@ -56,10 +56,8 @@ export class AddComponent implements OnInit {
   private judgeIfIdInRouter(): boolean | number {
     const id = this.activateRouter.snapshot.paramMap.get('id');
     if (id) {
-      this.isAddOrUpdate = 'update';
       return Number(id);
     } else {
-      this.isAddOrUpdate = 'add';
       return false;
     }
   }
@@ -134,6 +132,9 @@ export class AddComponent implements OnInit {
           if ('status' in result && result.status) {
             if ('message' in result) {
               this.msgAlert.onceOk(result.message);
+              setTimeout(() => {
+                this.router.navigateByUrl(`/detail/${Number(this.judgeIfIdInRouter())}`);
+              }, 1000);
             }
           } else {
             if ('message' in result) {

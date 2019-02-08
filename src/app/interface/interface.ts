@@ -70,6 +70,7 @@ export interface OneArticle {
   data?: {
     articleResult: Array<Article>;
     commentsResult: Array<OneComments> | null;
+    doILike: boolean;
   };
 }
 
@@ -141,7 +142,14 @@ export interface GetModifyArticleResponse {
   };
 }
 
+// 修改保存文章后端返回接口
 export interface SaveModifyArticleData {
+  status: boolean;
+  message: string;
+}
+
+// 喜欢后端返回接口
+export interface Like {
   status: boolean;
   message: string;
 }

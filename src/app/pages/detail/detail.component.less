@@ -63,6 +63,13 @@
       color: #9782be;
       display: flex;
       align-items: center;
+      mat-icon {
+        -webkit-transition: all ease 0.3s;
+        -moz-transition: all ease 0.3s;
+        -ms-transition: all ease 0.3s;
+        -o-transition: all ease 0.3s;
+        transition: all ease 0.3s;
+      }
 
       span {
         margin-left: 10px;
@@ -128,5 +135,12 @@
 @media (max-width: 768px) {
   .addBox {
     .calDetailCss(16px, 10px)
+  }
+}
+
+.like {
+  mat-icon {
+    text-shadow: 0 0 10px #ec3d3d;
+    color: #ff6060;
   }
 }

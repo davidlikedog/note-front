@@ -10,7 +10,7 @@ import {
   VerifyAccount,
   EmailResponse,
   RegisterResponse,
-  AddArticleResponse, DeleteArticle, GetModifyArticleResponse, SaveModifyArticleData
+  AddArticleResponse, DeleteArticle, GetModifyArticleResponse, SaveModifyArticleData, Like
 } from '../../interface/interface';
 import {catchError, tap} from 'rxjs/operators';
 import {VerifyLoginService} from '../verifyLoginService/verify-login.service';
@@ -66,13 +66,30 @@ export class HttpService {
   }
 
   getOneArticle(id: string): Observable<OneArticle> {
-    return this.http.get<OneArticle>(`${this.url}/getOneArticle/${id}`)
-      .pipe(
-        tap(result => {
-          this.checkLogin(result);
-        }),
-        catchError(this.handleError<OneArticle>('login', {} as OneArticle))
-      );
+    if (window.sessionStorage.getItem('Authorization')) {  // 需要判断有没有登录，以此来确定自己是否已经喜欢这篇文章
+      const token = window.sessionStorage.getItem('Authorization');
+
+      const httpOptions = {
+        headers: new HttpHeaders({
+          'Authorization': `Bearer ${token}`,
+        })
+      };
+      return this.http.get<OneArticle>(`${this.url}/getOneArticle/${id}`, httpOptions)
+        .pipe(
+          tap(result => {
+            this.checkLogin(result);
+          }),
+          catchError(this.handleError<OneArticle>('login', {} as OneArticle))
+        );
+    } else {
+      return this.http.get<OneArticle>(`${this.url}/getOneArticle/${id}`)
+        .pipe(
+          tap(result => {
+            this.checkLogin(result);
+          }),
+          catchError(this.handleError<OneArticle>('login', {} as OneArticle))
+        );
+    }
   }
 
   verifyAccountOnly(account): Observable<VerifyAccount> {
@@ -163,6 +180,26 @@ export class HttpService {
           this.checkLogin(result);
         }),
         catchError(this.handleError<SaveModifyArticleData>('login', {} as SaveModifyArticleData))
+      );
+  }
+
+  like(id: number, doILike: boolean): Observable<Like> {
+    const token = window.sessionStorage.getItem('Authorization');
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': `Bearer ${token}`,
+      })
+    };
+    const data = {
+      doILike: doILike
+    };
+    return this.http.put<Like>(`${this.url}/like/${id}`, data, httpOptions)
+      .pipe(
+        tap(result => {
+          this.checkLogin(result);
+        }),
+        catchError(this.handleError<Like>('login', {} as Like))
       );
   }
 
