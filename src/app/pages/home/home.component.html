@@ -11,7 +11,7 @@
 
         <div *ngIf="articleList.length>0">
           <div class="one" *ngFor="let oneArticle of articleList">
-            <app-one-article [oneArticle]="oneArticle"></app-one-article>
+            <app-one-article (like)="optLike($event)" [oneArticle]="oneArticle"></app-one-article>
           </div>
         </div>
 

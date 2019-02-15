@@ -1,4 +1,4 @@
-import {Component, OnInit, Input} from '@angular/core';
+import {Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
 import {Article} from '../../../interface/interface';
 import {VerifyLoginService} from '../../../service/verifyLoginService/verify-login.service';
 import {HttpService} from '../../../service/httpService/http.service';
@@ -12,6 +12,7 @@ import {MessageAlertService} from '../../../service/messageAlertService/message-
 export class OneArticleComponent implements OnInit {
   isLogin: boolean;
   @Input('oneArticle') oneArticle: Article;
+  @Output() like: EventEmitter<number> = new EventEmitter<number>();
   judgeUser: boolean;
 
   constructor(
@@ -46,6 +47,14 @@ export class OneArticleComponent implements OnInit {
 
   modifyPage(id) {
     window.location.href = `#/pages/add/${id}`;
+  }
+
+  ILike(event) {
+    event.stopPropagation();
+    event.preventDefault();
+    if (window.sessionStorage.getItem('Authorization')) {
+      this.like.emit(this.oneArticle.id);
+    }
   }
 
 }

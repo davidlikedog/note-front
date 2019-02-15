@@ -34,4 +34,8 @@ export class HomeComponent implements OnInit {
     });
   }
 
+  optLike(id: number) {
+    console.log(id);
+  }
+
 }

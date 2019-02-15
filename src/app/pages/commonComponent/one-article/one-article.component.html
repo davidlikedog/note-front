@@ -28,7 +28,7 @@
         <mat-icon>visibility</mat-icon>
         <span>{{oneArticle.read}}</span>
       </div>
-      <div class="oneOperation">
+      <div (click)="ILike($event)" class="oneOperation">
         <mat-icon>thumb_up_alt</mat-icon>
         <span>{{oneArticle.like}}</span>
       </div>

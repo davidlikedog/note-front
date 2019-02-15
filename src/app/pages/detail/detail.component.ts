@@ -54,11 +54,15 @@ export class DetailComponent implements OnInit {
   }
 
   like(articleId) {
-    this.doILike = !this.doILike;
-    this.doILike ? this.articleDetail.like += 1 : this.articleDetail.like -= 1;
-    this.httpService.like(articleId, this.doILike).subscribe(result => {
-      console.log(result);
-    });
+    if (window.sessionStorage.getItem('Authorization')) {
+      this.doILike = !this.doILike;
+      this.doILike ? this.articleDetail.like += 1 : this.articleDetail.like -= 1;
+      this.httpService.like(articleId, this.doILike).subscribe(result => {
+        console.log(result);
+      });
+    } else {
+      this.msgAlert.onceErr('请登录');
+    }
   }
 
 }
