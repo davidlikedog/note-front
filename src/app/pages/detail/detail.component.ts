@@ -17,7 +17,7 @@ export class DetailComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private httpService: HttpService,
-    private msgAlert: MessageAlertService
+    private msgAlert: MessageAlertService,
   ) {
     this.articleDetail = new class implements Article {
       author: string;
@@ -30,6 +30,7 @@ export class DetailComponent implements OnInit {
       like: number;
       read: number;
       title: string;
+      doILike: boolean;
     }();
     this.commentsList = [];
   }
@@ -58,7 +59,11 @@ export class DetailComponent implements OnInit {
       this.doILike = !this.doILike;
       this.doILike ? this.articleDetail.like += 1 : this.articleDetail.like -= 1;
       this.httpService.like(articleId, this.doILike).subscribe(result => {
-        console.log(result);
+        if (result && 'status' in result && result.status === false) {
+          if ('message' in result) {
+            this.msgAlert.onceErr(result.message);
+          }
+        }
       });
     } else {
       this.msgAlert.onceErr('请登录');

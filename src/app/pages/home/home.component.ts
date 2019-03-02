@@ -35,7 +35,23 @@ export class HomeComponent implements OnInit {
   }
 
   optLike(id: number) {
-    console.log(id);
+    if (window.sessionStorage.getItem('Authorization')) {
+      for (let i = 0; i < this.articleList.length; i++) {
+        if (this.articleList[i].id === id) {
+          this.articleList[i].doILike = !this.articleList[i].doILike;
+          this.articleList[i].doILike ? this.articleList[i].like += 1 : this.articleList[i].like -= 1;
+          this.service.like(id, this.articleList[i].doILike).subscribe(result => {
+            if (result && 'status' in result && result.status === false) {
+              if ('message' in result) {
+                this.msgAlert.onceErr(result.message);
+              }
+            }
+          });
+        }
+      }
+    } else {
+      this.msgAlert.onceErr('请登录');
+    }
   }
 
 }

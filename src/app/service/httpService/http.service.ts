@@ -56,13 +56,32 @@ export class HttpService {
   }
 
   getAllArticle(): Observable<AllArticle> {
-    return this.http.get<AllArticle>(`${this.url}/getAllArticle`)
-      .pipe(
-        tap(result => {
-          this.checkLogin(result);
-        }),
-        catchError(this.handleError<AllArticle>('login', {} as AllArticle))
-      );
+    // 为了拿到我是否喜欢这篇文章的状态
+    if (window.sessionStorage.getItem('Authorization')) {
+      const token = window.sessionStorage.getItem('Authorization');
+
+      const httpOptions = {
+        headers: new HttpHeaders({
+          'Authorization': `Bearer ${token}`,
+        })
+      };
+
+      return this.http.get<AllArticle>(`${this.url}/getAllArticle`, httpOptions)
+        .pipe(
+          tap(result => {
+            this.checkLogin(result);
+          }),
+          catchError(this.handleError<AllArticle>('login', {} as AllArticle))
+        );
+    } else {
+      return this.http.get<AllArticle>(`${this.url}/getAllArticle`)
+        .pipe(
+          tap(result => {
+            this.checkLogin(result);
+          }),
+          catchError(this.handleError<AllArticle>('login', {} as AllArticle))
+        );
+    }
   }
 
   getOneArticle(id: string): Observable<OneArticle> {

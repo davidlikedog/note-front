@@ -31,6 +31,7 @@ export interface Article {
   like: number;
   read: number;
   comments: number;
+  doILike?: boolean;
   content?: string;
 }
 
