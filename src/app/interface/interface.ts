@@ -50,6 +50,7 @@ export interface OneComments {
   userName: string;
   photo: string;
   likeNum: number;
+  articleId: number;
   replyResult: Array<OneReply> | null;
 }
 
@@ -62,6 +63,7 @@ export interface OneReply {
   toUserName: string;
   toUserPhoto: string;
   likeNum: number;
+  articleId: number;
 }
 
 // 单条文章的数据格式
@@ -186,10 +188,37 @@ export interface ReplyData {
   content: string;
   toUserName: string;
   commentsId: number;
+  articleId: number;
 }
 
 // 评论回复后端返回数据格式
 export interface AddReply {
   status: boolean;
   message: string;
+}
+
+// 单条与我相关数据
+export interface SingleInformation {
+  articleId: number;
+  cover: string;
+  author: number;
+  time: string; // 指的是最新一条评论的时间
+  type: string; // 前端无用，指的是最新一条评论是评论还是回复
+  createTime: string;
+  userName: string;
+  photo?: string;
+  title: string;
+  description: string;
+  latestInformation: string;
+  whoIsTalker: string;
+  comments: Array<OneComments> | null;
+}
+
+// 与我相关里需要的数据格式
+export interface NewInformation {
+  status: boolean;
+  message: string;
+  data?: {
+    articleData: Array<SingleInformation>;
+  };
 }

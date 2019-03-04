@@ -19,7 +19,7 @@ import {
   AddComments,
   ReplyData,
   Comments,
-  VerifyNickName, AddReply
+  VerifyNickName, AddReply, NewInformation
 } from '../../interface/interface';
 import {catchError, tap} from 'rxjs/operators';
 import {VerifyLoginService} from '../verifyLoginService/verify-login.service';
@@ -284,6 +284,40 @@ export class HttpService {
       })
     };
     return this.http.post<AddReply>(`${this.url}/addReply`, data, httpOptions)
+      .pipe(
+        tap(result => {
+          this.checkLogin(result);
+        }),
+        catchError(this.handleError<AddReply>('login', {} as AddReply))
+      );
+  }
+
+  getMineArticle(): Observable<AllArticle> {
+    const token = window.sessionStorage.getItem('Authorization');
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': `Bearer ${token}`,
+      })
+    };
+    return this.http.get<AllArticle>(`${this.url}/getMineArticle`, httpOptions)
+      .pipe(
+        tap(result => {
+          this.checkLogin(result);
+        }),
+        catchError(this.handleError<AddReply>('login', {} as AddReply))
+      );
+  }
+
+  getNewInformation(): Observable<NewInformation> {
+    const token = window.sessionStorage.getItem('Authorization');
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': `Bearer ${token}`,
+      })
+    };
+    return this.http.get<NewInformation>(`${this.url}/getNewInformation`, httpOptions)
       .pipe(
         tap(result => {
           this.checkLogin(result);

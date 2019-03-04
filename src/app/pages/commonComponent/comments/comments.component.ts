@@ -30,7 +30,8 @@ export class CommentsComponent implements OnInit {
     this.reply.open(ReplyComponent, {
       data: {
         replyWho: replyWho,
-        commentsId: Number(this.type === 'comments' ? this.commentsData.id : this.commentsId)
+        commentsId: Number(this.type === 'comments' ? this.commentsData.id : this.commentsId),
+        articleId: this.type === 'comments' ? this.commentsData.articleId : this.replyData.articleId
       }
     });
   }
@@ -40,6 +41,7 @@ export class CommentsComponent implements OnInit {
 interface ReplyWho {
   replyWho: string;
   commentsId: number;
+  articleId: number;
 }
 
 @Component({
@@ -66,7 +68,8 @@ export class ReplyComponent {
       const replyData: ReplyData = {
         content: this.replyContent,
         toUserName: this.data.replyWho,
-        commentsId: this.data.commentsId
+        commentsId: this.data.commentsId,
+        articleId: this.data.articleId
       };
       this.httpService.addReply(replyData).subscribe(value => {
         if ('status' in value && value.status) {

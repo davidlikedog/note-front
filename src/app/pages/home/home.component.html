@@ -9,7 +9,7 @@
     <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center start" fxLayoutAlign.xs="start">
       <div [ngStyle.sm]="{'border-right':'none'}" [ngStyle.xs]="{'border-right':'none'}" class="item" fxFlex>
 
-        <div *ngIf="articleList.length>0">
+        <div *ngIf="articleList && articleList.length>0">
           <div class="one" *ngFor="let oneArticle of articleList">
             <app-one-article (like)="optLike($event)" [oneArticle]="oneArticle"></app-one-article>
           </div>
