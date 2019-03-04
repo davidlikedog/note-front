@@ -4,7 +4,7 @@
   </div>
   <div class="commentsRight">
     <div class="firstLine">
-      <a routerLink="#">{{type === 'comments' ? commentsData.userName : replyData.fromUserName}}：</a>
+      <a #sayer routerLink="#">{{type === 'comments' ? commentsData.userName : replyData.fromUserName}}：</a>
       <a *ngIf="type === 'reply'" routerLink="#">@{{replyData.toUserName}} </a>
       <span class="commentsContent">{{type === 'comments' ? commentsData.content : replyData.content}}</span>
     </div>
@@ -14,11 +14,11 @@
         replyData.createTime | date: 'yyyy-MM-dd HH:mm:ss'}}
       </div>
       <div class="moreDetail">
-        <div class="first">
-          <mat-icon>thumb_up_alt</mat-icon>
-          <span>0</span>
-        </div>
-        <div class="second" (click)="openReply()">
+        <!--<div class="first">-->
+          <!--<mat-icon>thumb_up_alt</mat-icon>-->
+          <!--<span>0</span>-->
+        <!--</div>-->
+        <div class="second" (click)="openReply(sayer)">
           回复
         </div>
       </div>

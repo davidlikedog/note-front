@@ -70,8 +70,23 @@ export interface OneArticle {
   message: string;
   data?: {
     articleResult: Array<Article>;
-    commentsResult: Array<OneComments> | null;
     doILike: boolean;
+  };
+}
+
+// 单条文章评论以及回复数据格式
+export interface OneArticleComments {
+  status: boolean;
+  message: string;
+  data: Array<OneComments> | null;
+}
+
+// 注册时检查昵称是否唯一
+export interface VerifyNickName {
+  status: boolean;
+  message: string;
+  data?: {
+    isOnly: boolean;
   };
 }
 
@@ -151,6 +166,30 @@ export interface SaveModifyArticleData {
 
 // 喜欢后端返回接口
 export interface Like {
+  status: boolean;
+  message: string;
+}
+
+// 前端评论数据格式
+export interface Comments {
+  comments: string;
+}
+
+// 添加评论后端返回接口
+export interface AddComments {
+  status: boolean;
+  message: string;
+}
+
+// 评论回复前端数据格式
+export interface ReplyData {
+  content: string;
+  toUserName: string;
+  commentsId: number;
+}
+
+// 评论回复后端返回数据格式
+export interface AddReply {
   status: boolean;
   message: string;
 }

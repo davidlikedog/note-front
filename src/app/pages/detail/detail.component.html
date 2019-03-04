@@ -40,8 +40,8 @@
 
         <div class="input">
           <mat-form-field class="example-full-width">
-            <input type="text" matInput placeholder="enter sth">
-            <button mat-button matSuffix>
+            <input [(ngModel)]="addCommentsContent" type="text" matInput placeholder="enter sth">
+            <button (click)="addComments()" mat-button matSuffix>
               <mat-icon class="sendComments">send</mat-icon>
             </button>
           </mat-form-field>
@@ -51,7 +51,7 @@
           <div *ngFor="let oneComments of commentsList" class="commentsList">
             <app-comments [commentsData]="oneComments" [type]="'comments'"></app-comments>
             <div *ngIf="oneComments.replyResult" class="reply">
-              <app-comments *ngFor="let oneReply of oneComments.replyResult" [replyData]="oneReply" [type]="'reply'"></app-comments>
+              <app-comments *ngFor="let oneReply of oneComments.replyResult" [commentsId]="oneComments.id" [replyData]="oneReply" [type]="'reply'"></app-comments>
             </div>
           </div>
         </div>

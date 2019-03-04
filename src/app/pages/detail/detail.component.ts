@@ -1,8 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {HttpService} from '../../service/httpService/http.service';
-import {Article, OneComments, OneReply} from '../../interface/interface';
+import {Article, Comments, OneComments, OneReply} from '../../interface/interface';
 import {MessageAlertService} from '../../service/messageAlertService/message-alert.service';
+import {RefreshCommentsService} from '../../service/refreshCommentsService/refresh-comments.service';
 
 @Component({
   selector: 'app-detail',
@@ -13,11 +14,13 @@ export class DetailComponent implements OnInit {
   articleDetail: Article;
   commentsList: Array<OneComments>;
   doILike = false;
+  addCommentsContent = '';
 
   constructor(
     private route: ActivatedRoute,
     private httpService: HttpService,
     private msgAlert: MessageAlertService,
+    private reFreshComments: RefreshCommentsService,
   ) {
     this.articleDetail = new class implements Article {
       author: string;
@@ -43,8 +46,25 @@ export class DetailComponent implements OnInit {
           this.articleDetail = value.data.articleResult[0];
           this.doILike = value.data.doILike;
         }
-        if ('commentsResult' in value.data) {
-          this.commentsList = value.data.commentsResult;
+      } else {
+        if ('message' in value) {
+          this.msgAlert.onceErr(value.message);
+        }
+      }
+    });
+    this.getOneArticleComments(id);
+    this.reFreshComments.reFreshComments.subscribe(value => {
+      if (value) {
+        this.getOneArticleComments(id);
+      }
+    });
+  }
+
+  getOneArticleComments(commentsId: string) {
+    this.httpService.getOneArticleComments(commentsId).subscribe(value => {
+      if ('status' in value && value.status) {
+        if ('data' in value && value.data && value.data.length > 0) {
+          this.commentsList = value.data;
         }
       } else {
         if ('message' in value) {
@@ -67,6 +87,27 @@ export class DetailComponent implements OnInit {
       });
     } else {
       this.msgAlert.onceErr('请登录');
+    }
+  }
+
+  addComments() {
+    const articleId: string = this.route.snapshot.paramMap.get('id');
+    if (!this.addCommentsContent) {
+      this.msgAlert.onceErr('请输入内容');
+    } else {
+      const data: Comments = {
+        comments: this.addCommentsContent
+      };
+      this.httpService.addComments(articleId, data).subscribe(value => {
+        if ('status' in value && value.status) {
+          this.getOneArticleComments(articleId);
+          this.addCommentsContent = '';
+        } else {
+          if ('message' in value) {
+            this.msgAlert.onceErr(value.message);
+          }
+        }
+      });
     }
   }
 

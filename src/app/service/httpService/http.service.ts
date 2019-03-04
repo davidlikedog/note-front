@@ -10,7 +10,16 @@ import {
   VerifyAccount,
   EmailResponse,
   RegisterResponse,
-  AddArticleResponse, DeleteArticle, GetModifyArticleResponse, SaveModifyArticleData, Like
+  AddArticleResponse,
+  DeleteArticle,
+  GetModifyArticleResponse,
+  SaveModifyArticleData,
+  Like,
+  OneArticleComments,
+  AddComments,
+  ReplyData,
+  Comments,
+  VerifyNickName, AddReply
 } from '../../interface/interface';
 import {catchError, tap} from 'rxjs/operators';
 import {VerifyLoginService} from '../verifyLoginService/verify-login.service';
@@ -22,7 +31,7 @@ import {MessageAlertService} from '../messageAlertService/message-alert.service'
   providedIn: 'root'
 })
 export class HttpService {
-  private url: string;
+  private readonly url: string;
 
   constructor(
     private http: HttpClient,
@@ -111,7 +120,34 @@ export class HttpService {
     }
   }
 
-  verifyAccountOnly(account): Observable<VerifyAccount> {
+  getOneArticleComments(id: string): Observable<OneArticleComments> {
+    const token = window.sessionStorage.getItem('Authorization');
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': `Bearer ${token}`,
+      })
+    };
+    return this.http.get<OneArticleComments>(`${this.url}/getOneArticleComments/${id}`, httpOptions)
+      .pipe(
+        tap(result => {
+          this.checkLogin(result);
+        }),
+        catchError(this.handleError<OneArticleComments | null>('login', {} as OneArticleComments))
+      );
+  }
+
+  verifyNickNameOnly(nickName: string): Observable<VerifyNickName> {
+    const data = {
+      nickName: nickName
+    };
+    return this.http.post<VerifyNickName>(`${this.url}/verifyNickName`, data)
+      .pipe(
+        catchError(this.handleError<VerifyNickName>('login', {} as VerifyNickName))
+      );
+  }
+
+  verifyAccountOnly(account: number): Observable<VerifyAccount> {
     return this.http.get<VerifyAccount>(`${this.url}/verifyAccount/${account}`)
       .pipe(
         catchError(this.handleError<VerifyAccount>('login', {} as VerifyAccount))
@@ -219,6 +255,40 @@ export class HttpService {
           this.checkLogin(result);
         }),
         catchError(this.handleError<Like>('login', {} as Like))
+      );
+  }
+
+  addComments(articleId: string, data: Comments): Observable<AddComments> {
+    const token = window.sessionStorage.getItem('Authorization');
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': `Bearer ${token}`,
+      })
+    };
+    return this.http.put<AddComments>(`${this.url}/addComments/${articleId}`, data, httpOptions)
+      .pipe(
+        tap(result => {
+          this.checkLogin(result);
+        }),
+        catchError(this.handleError<AddComments>('login', {} as AddComments))
+      );
+  }
+
+  addReply(data: ReplyData): Observable<AddReply> {
+    const token = window.sessionStorage.getItem('Authorization');
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': `Bearer ${token}`,
+      })
+    };
+    return this.http.post<AddReply>(`${this.url}/addReply`, data, httpOptions)
+      .pipe(
+        tap(result => {
+          this.checkLogin(result);
+        }),
+        catchError(this.handleError<AddReply>('login', {} as AddReply))
       );
   }
 

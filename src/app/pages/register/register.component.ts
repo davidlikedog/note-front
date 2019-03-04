@@ -15,6 +15,7 @@ import {LoginData} from '../../interface/interface';
 })
 export class RegisterComponent implements OnInit, OnDestroy {
   register: FormGroup;
+  nickNameIsOnly = true;
   accountIsOnly = true;
   coverImg = '';
   photoFile: File;
@@ -51,9 +52,28 @@ export class RegisterComponent implements OnInit, OnDestroy {
     this.foot.showFooter.emit(true);
   }
 
+  verifyNickName() {
+    if (!this.register.controls.nickName.invalid) {
+      const nickName = this.register.controls.nickName.value;
+      this.httpService.verifyNickNameOnly(nickName).subscribe(value => {
+        if ('status' in value && value.status) {
+          if ('data' in value && 'isOnly' in value.data) {
+            this.nickNameIsOnly = value.data.isOnly;
+          } else {
+            this.msgAlert.onceErr('返回数据格式错误');
+          }
+        } else {
+          if ('message' in value) {
+            this.msgAlert.onceErr(value.message);
+          }
+        }
+      });
+    }
+  }
+
   verifyAccount() {
     if (!this.register.controls.account.invalid) {
-      const account = this.register.controls.account.value;
+      const account = Number(this.register.controls.account.value);
       this.httpService.verifyAccountOnly(account).subscribe(value => {
         if ('status' in value && value.status) {
           if ('data' in value && 'isOnly' in value.data) {
