@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, HostListener} from '@angular/core';
 import {HttpService} from '../../service/httpService/http.service';
 import {Article} from '../../interface/interface';
 import {MessageAlertService} from '../../service/messageAlertService/message-alert.service';
@@ -15,6 +15,34 @@ export class HomeComponent implements OnInit {
   numOfAtBottom = 0;
   haveMore = true;
   isTheFirstScrolling = true;
+
+  @HostListener('window:scroll')
+  public windowScrolled() {
+    if (this.haveMore && !this.isTheFirstScrolling) {
+      const scrollHeight = document.documentElement.scrollHeight;
+      const scrollTop = document.documentElement.scrollTop;
+      const clientHeight = document.body.clientHeight;
+      if (scrollTop + clientHeight - scrollHeight >= -1 && scrollTop + clientHeight - scrollHeight <= 1) {
+        this.numOfAtBottom += 1;
+        this.currentArticleId = this.numOfAtBottom * lineTotal;
+        this.service.getAllArticle(this.currentArticleId).subscribe(data => {
+          if ('status' in data && data.status) {
+            if ('data' in data) {
+              this.articleList = this.articleList.concat(data.data);
+            } else {
+              this.msgAlert.onceErr('数据获取失败');
+            }
+          } else {
+            this.haveMore = !this.haveMore;
+            if ('message' in data) {
+              this.msgAlert.onceErr(data.message);
+            }
+          }
+        });
+      }
+    }
+    this.isTheFirstScrolling = false;
+  }
 
   constructor(
     private service: HttpService,
@@ -37,32 +65,6 @@ export class HomeComponent implements OnInit {
         }
       }
     });
-    window.onscroll = () => {
-      if (this.haveMore && !this.isTheFirstScrolling) {
-        const scrollHeight = document.documentElement.scrollHeight;
-        const scrollTop = document.documentElement.scrollTop;
-        const clientHeight = document.body.clientHeight;
-        if (scrollTop + clientHeight === scrollHeight) {
-          this.numOfAtBottom += 1;
-          this.currentArticleId = this.numOfAtBottom * lineTotal;
-          this.service.getAllArticle(this.currentArticleId).subscribe(data => {
-            if ('status' in data && data.status) {
-              if ('data' in data) {
-                this.articleList = this.articleList.concat(data.data);
-              } else {
-                this.msgAlert.onceErr('数据获取失败');
-              }
-            } else {
-              this.haveMore = !this.haveMore;
-              if ('message' in data) {
-                this.msgAlert.onceErr(data.message);
-              }
-            }
-          });
-        }
-      }
-      this.isTheFirstScrolling = false;
-    };
   }
 
   optLike(id: number) {

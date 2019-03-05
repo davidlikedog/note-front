@@ -109,15 +109,14 @@ export class HttpService {
           }),
           catchError(this.handleError<OneArticle>('login', {} as OneArticle))
         );
-    } else {
-      return this.http.get<OneArticle>(`${this.url}/getOneArticle/${id}`)
-        .pipe(
-          tap(result => {
-            this.checkLogin(result);
-          }),
-          catchError(this.handleError<OneArticle>('login', {} as OneArticle))
-        );
     }
+    return this.http.get<OneArticle>(`${this.url}/getOneArticle/${id}`)
+      .pipe(
+        tap(result => {
+          this.checkLogin(result);
+        }),
+        catchError(this.handleError<OneArticle>('login', {} as OneArticle))
+      );
   }
 
   getOneArticleComments(id: string): Observable<OneArticleComments> {
@@ -320,6 +319,24 @@ export class HttpService {
   }
 
   getNewInformation(name: string): Observable<NewInformation> {
+    if (window.sessionStorage.getItem('Authorization')) {
+      const token = window.sessionStorage.getItem('Authorization');
+
+      const httpOptions = {
+        headers: new HttpHeaders({
+          'Authorization': `Bearer ${token}`,
+        })
+      };
+
+      return this.http.get<NewInformation>(`${this.url}/getNewInformation/${name}`, httpOptions)
+        .pipe(
+          tap(result => {
+            this.checkLogin(result);
+          }),
+          catchError(this.handleError<NewInformation>('login', {} as NewInformation))
+        );
+    }
+
     return this.http.get<NewInformation>(`${this.url}/getNewInformation/${name}`)
       .pipe(
         tap(result => {

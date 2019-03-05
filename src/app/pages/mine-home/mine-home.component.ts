@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, HostListener} from '@angular/core';
 import {HttpService} from '../../service/httpService/http.service';
 import {AddLeaveMessageInner, Article, LeaveMessageInner, OneDetailMsgInner, SingleInformation} from '../../interface/interface';
 import {MessageAlertService} from '../../service/messageAlertService/message-alert.service';
@@ -23,6 +23,35 @@ export class MineHomeComponent implements OnInit {
   numOfAtBottom = 0;
   haveMore = true;
   isTheFirstScrolling = true;
+  name = '';
+
+  @HostListener('window:scroll', ['$event'])
+  public windowScrolled($event: Event) {
+    if (this.haveMore && !this.isTheFirstScrolling) {
+      const scrollHeight = document.documentElement.scrollHeight;
+      const scrollTop = document.documentElement.scrollTop;
+      const clientHeight = document.body.clientHeight;
+      if (scrollTop + clientHeight - scrollHeight >= -1 && scrollTop + clientHeight - scrollHeight <= 1) {
+        this.numOfAtBottom += 1;
+        this.currentArticleId = this.numOfAtBottom * lineTotal;
+        this.httpService.getMineArticle(this.name, this.currentArticleId).subscribe(data => {
+          if ('status' in data && data.status) {
+            if ('data' in data) {
+              this.articleList = this.articleList.concat(data.data);
+            } else {
+              this.msgAlert.onceErr('数据获取失败');
+            }
+          } else {
+            this.haveMore = !this.haveMore;
+            if ('message' in data) {
+              this.msgAlert.onceErr(data.message);
+            }
+          }
+        });
+      }
+    }
+    this.isTheFirstScrolling = false;
+  }
 
   constructor(
     private httpService: HttpService,
@@ -48,6 +77,7 @@ export class MineHomeComponent implements OnInit {
       this.msgAlert.onceErr('参数错误');
       return;
     }
+    this.name = name;
     this.httpService.getSomeoneDetailMsg(name).subscribe(data => {
       if ('status' in data && data.status) {
         if ('data' in data) {
@@ -81,32 +111,6 @@ export class MineHomeComponent implements OnInit {
         this.getSthAboutMe(name);
       }
     });
-    window.onscroll = () => {
-      if (this.haveMore && !this.isTheFirstScrolling) {
-        const scrollHeight = document.documentElement.scrollHeight;
-        const scrollTop = document.documentElement.scrollTop;
-        const clientHeight = document.body.clientHeight;
-        if (scrollTop + clientHeight === scrollHeight) {
-          this.numOfAtBottom += 1;
-          this.currentArticleId = this.numOfAtBottom * lineTotal;
-          this.httpService.getMineArticle(name, this.currentArticleId).subscribe(data => {
-            if ('status' in data && data.status) {
-              if ('data' in data) {
-                this.articleList = this.articleList.concat(data.data);
-              } else {
-                this.msgAlert.onceErr('数据获取失败');
-              }
-            } else {
-              this.haveMore = !this.haveMore;
-              if ('message' in data) {
-                this.msgAlert.onceErr(data.message);
-              }
-            }
-          });
-        }
-      }
-      this.isTheFirstScrolling = false;
-    };
   }
 
   getLeaveMessage(name): void {
@@ -167,7 +171,6 @@ export class MineHomeComponent implements OnInit {
   addLeaveMsg(toUserName: string) {
     if (window.sessionStorage.getItem('Authorization')) {
       if (this.addLeaveMsgContent && this.addLeaveMsgContent !== '') {
-        // todo
         const data: AddLeaveMessageInner = {
           content: this.addLeaveMsgContent,
           toUserName: toUserName
