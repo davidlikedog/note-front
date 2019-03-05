@@ -203,7 +203,7 @@ export interface SingleInformation {
   cover: string;
   author: number;
   time: string; // 指的是最新一条评论的时间
-  type: string; // 前端无用，指的是最新一条评论是评论还是回复
+  type: string; // 指的是最新一条评论是评论还是回复
   createTime: string;
   userName: string;
   photo?: string;
@@ -211,6 +211,7 @@ export interface SingleInformation {
   description: string;
   latestInformation: string;
   whoIsTalker: string;
+  commentsId: number; // 最新一条评论的评论id
   comments: Array<OneComments> | null;
 }
 
@@ -221,4 +222,50 @@ export interface NewInformation {
   data?: {
     articleData: Array<SingleInformation>;
   };
+}
+
+// 个人详细信息
+export interface OneDetailMsgInner {
+  userName: string;
+  photo: string;
+  aboutMe: string;
+  mail: string;
+}
+
+// 个人详细信息后端返回
+export interface OneDetailMsg {
+  status: boolean;
+  message: string;
+  data?: {
+    detailMsg: OneDetailMsgInner;
+  };
+}
+
+// 留言详情
+export interface LeaveMessageInner {
+  fromUserName: string;
+  toUserName: string;
+  photo: string;
+  createTime: string;
+  content: string;
+  id: number;
+}
+
+// 留言后端返回数据
+export interface LeaveMessage {
+  status: boolean;
+  message: string;
+  data?: Array<LeaveMessageInner>;
+}
+
+// 添加留言详细
+export interface AddLeaveMessageInner {
+  content: string;
+  toUserName: string;
+}
+
+// 添加留言后端返回
+export interface AddLeaveMessage {
+  status: boolean;
+  message: string;
 }

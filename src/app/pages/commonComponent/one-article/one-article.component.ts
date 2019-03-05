@@ -3,6 +3,7 @@ import {Article} from '../../../interface/interface';
 import {VerifyLoginService} from '../../../service/verifyLoginService/verify-login.service';
 import {HttpService} from '../../../service/httpService/http.service';
 import {MessageAlertService} from '../../../service/messageAlertService/message-alert.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-one-article',
@@ -19,6 +20,7 @@ export class OneArticleComponent implements OnInit {
     private verifyLogin: VerifyLoginService,
     private httpService: HttpService,
     private msgAlert: MessageAlertService,
+    private router: Router
   ) {
   }
 
@@ -54,7 +56,15 @@ export class OneArticleComponent implements OnInit {
     event.preventDefault();
     if (window.sessionStorage.getItem('Authorization')) {
       this.like.emit(this.oneArticle.id);
+    } else {
+      this.msgAlert.onceErr('请登录');
     }
+  }
+
+  goToAuthorPage(event: MouseEvent, authorName: string) {
+    event.stopPropagation();
+    event.preventDefault();
+    this.router.navigateByUrl(`/pages/mine/${authorName}`);
   }
 
 }

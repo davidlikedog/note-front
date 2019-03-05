@@ -26,7 +26,7 @@ const routes: Routes = [
       {path: 'register', component: RegisterComponent},
       {path: 'add', component: AddComponent, canActivate: [VerifyLogin]},
       {path: 'add/:id', component: AddComponent, canActivate: [VerifyLogin]},
-      {path: 'mine', component: MineHomeComponent, canActivate: [VerifyLogin]},
+      {path: 'mine/:name', component: MineHomeComponent, canActivate: [VerifyLogin]},
       {path: 'modify/:id', component: ModifyComponent, canActivate: [VerifyLogin]},
       {path: '**', component: NotFoundComponent},
     ]

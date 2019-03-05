@@ -1,12 +1,12 @@
 <div class="body" [ngStyle.xs]="{'width':'100%','padding.px':'0 10'}">
   <div class="homeBox" fxLayout="column" fxLayoutAlign="center start" fxLayoutAlign.xs="start">
     <div class="photo">
-      <img src="../../../assets/img/photo.png" alt="">
+      <img src="{{oneDetailMsg.photo}}" alt="">
     </div>
 
-    <div class="name">雨城</div>
-    <div class="email">123@qq.com</div>
-    <div class="sign">这个人懒得烧蛇吃，什么也没留下</div>
+    <div class="name">{{oneDetailMsg.userName}}</div>
+    <div class="email">{{oneDetailMsg.mail}}</div>
+    <div class="sign">{{oneDetailMsg.aboutMe}}</div>
     <div class="tabs">
       <mat-tab-group mat-align-tabs="center">
 
@@ -26,35 +26,43 @@
                 <div class="photoImg" mat-card-avatar>
                   <img src="{{one.photo}}" alt="">
                 </div>
-                <mat-card-title class="author">{{one.userName}}</mat-card-title>
+                <mat-card-title class="author">
+                  <span (click)="goToAuthorPage($event,one.userName)">{{one.userName}}</span>
+                </mat-card-title>
                 <mat-card-subtitle>
                   <span class="createTime">{{one.createTime | date: 'yyyy-MM-dd HH:mm:ss'}}</span>
                 </mat-card-subtitle>
-                <div class="reply">
+                <div (click)="openReply(sayer,one.commentsId,one.articleId)" class="reply">
                   <button mat-button>回复</button>
                 </div>
               </mat-card-header>
               <mat-card-content>
                 <div class="talkContent">
-                  <span><a href="#">{{one.whoIsTalker}}：</a>{{one.latestInformation}}</span>
+                  <span>
+                    <a #sayer routerLink="/pages/mine/{{one.whoIsTalker}}">{{one.whoIsTalker}}：</a>
+                    {{one.latestInformation}}
+                  </span>
                   <span class="talkTime">{{one.time | date: 'yyyy-MM-dd HH:mm:ss'}}</span>
                 </div>
-                <div class="articleBody">
-                  <div class="cover">
-                    <img src="{{one.cover}}" alt="">
+                <a routerLink="/pages/detail/{{one.articleId}}">
+                  <div class="articleBody">
+                    <div class="cover">
+                      <img src="{{one.cover}}" alt="">
+                    </div>
+                    <div class="detail">
+                      <div class="articleTitle">{{one.title}}</div>
+                      <div [style.-webkit-box-orient]="'vertical'" class="articleDescription">{{one.description}}</div>
+                    </div>
                   </div>
-                  <div class="detail">
-                    <div class="articleTitle">{{one.title}}</div>
-                    <div [style.-webkit-box-orient]="'vertical'" class="articleDescription">{{one.description}}</div>
-                  </div>
-                </div>
+                </a>
               </mat-card-content>
               <mat-card-actions>
                 <div *ngIf="one.comments.length>0">
                   <div *ngFor="let oneComments of one.comments" class="commentsList">
                     <app-comments [commentsData]="oneComments" [type]="'comments'"></app-comments>
                     <div *ngIf="oneComments.replyResult" class="commentsReply">
-                      <app-comments *ngFor="let oneReply of oneComments.replyResult" [commentsId]="oneComments.id" [replyData]="oneReply" type="reply"></app-comments>
+                      <app-comments *ngFor="let oneReply of oneComments.replyResult" [commentsId]="oneComments.id"
+                                    [replyData]="oneReply" type="reply"></app-comments>
                     </div>
                   </div>
                 </div>
@@ -65,31 +73,44 @@
         </mat-tab>
 
         <mat-tab label="我的留言">
-          <div class="one">
-            <mat-card class="aboutMe">
-              <mat-card-header class="cardHeader">
-                <div class="photoImg" mat-card-avatar>
-                  <img src="../../../assets/img/photo.png" alt="">
-                </div>
-                <mat-card-title class="author">雨城</mat-card-title>
-                <mat-card-subtitle>
-                  <span class="createTime">2019,01.25 19:47</span>
-                </mat-card-subtitle>
-                <div class="reply">
-                  <button mat-button>回复</button>
-                </div>
-              </mat-card-header>
-              <mat-card-content>
-                <div class="talkContent">这是谈话内容</div>
-              </mat-card-content>
-              <mat-card-actions>
-                <div class="replyMsg">雨城：太阳东升</div>
-              </mat-card-actions>
-            </mat-card>
+          <div class="input">
+            <mat-form-field class="example-full-width">
+              <input (keydown)="$event.keyCode === 13 && addLeaveMsg(oneDetailMsg.userName)"
+                     [(ngModel)]="addLeaveMsgContent" type="text" matInput placeholder="enter sth">
+              <button (click)="addLeaveMsg(oneDetailMsg.userName)" mat-button matSuffix>
+                <mat-icon class="sendComments">send</mat-icon>
+              </button>
+            </mat-form-field>
           </div>
+          <div *ngIf="leaveMessage && leaveMessage.length>0">
+            <div class="one" *ngFor="let one of leaveMessage">
+              <mat-card class="aboutMe">
+                <mat-card-header class="cardHeader">
+                  <div class="photoImg" mat-card-avatar>
+                    <img src="{{one.photo}}" alt="">
+                  </div>
+                  <mat-card-title class="author">{{one.fromUserName}}</mat-card-title>
+                  <mat-card-subtitle>
+                    <span class="createTime">{{one.createTime}}</span>
+                  </mat-card-subtitle>
+                  <div class="reply">
+                    <!--<button mat-button>回复</button>-->
+                  </div>
+                </mat-card-header>
+                <mat-card-content>
+                  <div class="talkContent">{{one.content}}</div>
+                </mat-card-content>
+                <mat-card-actions>
+                  <!--<div class="replyMsg">雨城：太阳东升</div>-->
+                </mat-card-actions>
+              </mat-card>
+            </div>
+          </div>
+
+          <div *ngIf="!leaveMessage || leaveMessage.length===0">没有留言</div>
         </mat-tab>
 
-        <mat-tab label="我的访客">
+        <mat-tab disabled label="我的访客">
           <mat-list role="list">
             <mat-list-item role="listitem">
               <div class="visitor">

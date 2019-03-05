@@ -19,7 +19,7 @@ import {
   AddComments,
   ReplyData,
   Comments,
-  VerifyNickName, AddReply, NewInformation
+  VerifyNickName, AddReply, NewInformation, OneDetailMsg, LeaveMessage, AddLeaveMessageInner, AddLeaveMessage
 } from '../../interface/interface';
 import {catchError, tap} from 'rxjs/operators';
 import {VerifyLoginService} from '../verifyLoginService/verify-login.service';
@@ -64,7 +64,7 @@ export class HttpService {
       );
   }
 
-  getAllArticle(): Observable<AllArticle> {
+  getAllArticle(currentArticleId: number): Observable<AllArticle> {
     // 为了拿到我是否喜欢这篇文章的状态
     if (window.sessionStorage.getItem('Authorization')) {
       const token = window.sessionStorage.getItem('Authorization');
@@ -75,7 +75,7 @@ export class HttpService {
         })
       };
 
-      return this.http.get<AllArticle>(`${this.url}/getAllArticle`, httpOptions)
+      return this.http.get<AllArticle>(`${this.url}/getAllArticle/${currentArticleId}`, httpOptions)
         .pipe(
           tap(result => {
             this.checkLogin(result);
@@ -83,7 +83,7 @@ export class HttpService {
           catchError(this.handleError<AllArticle>('login', {} as AllArticle))
         );
     } else {
-      return this.http.get<AllArticle>(`${this.url}/getAllArticle`)
+      return this.http.get<AllArticle>(`${this.url}/getAllArticle/${currentArticleId}`)
         .pipe(
           tap(result => {
             this.checkLogin(result);
@@ -292,24 +292,64 @@ export class HttpService {
       );
   }
 
-  getMineArticle(): Observable<AllArticle> {
-    const token = window.sessionStorage.getItem('Authorization');
+  getMineArticle(name: string, currentArticleId: number): Observable<AllArticle> {
+    if (window.sessionStorage.getItem('Authorization')) {
+      const token = window.sessionStorage.getItem('Authorization');
 
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Authorization': `Bearer ${token}`,
-      })
-    };
-    return this.http.get<AllArticle>(`${this.url}/getMineArticle`, httpOptions)
+      const httpOptions = {
+        headers: new HttpHeaders({
+          'Authorization': `Bearer ${token}`,
+        })
+      };
+
+      return this.http.get<AllArticle>(`${this.url}/getMineArticle/${name}/${currentArticleId}`, httpOptions)
+        .pipe(
+          tap(result => {
+            this.checkLogin(result);
+          }),
+          catchError(this.handleError<AllArticle>('login', {} as AllArticle))
+        );
+    }
+    return this.http.get<AllArticle>(`${this.url}/getMineArticle/${name}/${currentArticleId}`)
       .pipe(
         tap(result => {
           this.checkLogin(result);
         }),
-        catchError(this.handleError<AddReply>('login', {} as AddReply))
+        catchError(this.handleError<AllArticle>('login', {} as AllArticle))
       );
   }
 
-  getNewInformation(): Observable<NewInformation> {
+  getNewInformation(name: string): Observable<NewInformation> {
+    return this.http.get<NewInformation>(`${this.url}/getNewInformation/${name}`)
+      .pipe(
+        tap(result => {
+          this.checkLogin(result);
+        }),
+        catchError(this.handleError<NewInformation>('login', {} as NewInformation))
+      );
+  }
+
+  getSomeoneDetailMsg(name: string): Observable<OneDetailMsg> {
+    return this.http.get<OneDetailMsg>(`${this.url}/getOneDetailMsg/${name}`)
+      .pipe(
+        tap(result => {
+          this.checkLogin(result);
+        }),
+        catchError(this.handleError<OneDetailMsg>('login', {} as OneDetailMsg))
+      );
+  }
+
+  getLeaveMessage(name: string): Observable<LeaveMessage> {
+    return this.http.get<LeaveMessage>(`${this.url}/getLeaveMessage/${name}`)
+      .pipe(
+        tap(result => {
+          this.checkLogin(result);
+        }),
+        catchError(this.handleError<LeaveMessage>('login', {} as LeaveMessage))
+      );
+  }
+
+  addLeaveMessage(data: AddLeaveMessageInner): Observable<AddLeaveMessage> {
     const token = window.sessionStorage.getItem('Authorization');
 
     const httpOptions = {
@@ -317,12 +357,12 @@ export class HttpService {
         'Authorization': `Bearer ${token}`,
       })
     };
-    return this.http.get<NewInformation>(`${this.url}/getNewInformation`, httpOptions)
+    return this.http.post<AddLeaveMessage>(`${this.url}/addLeaveMessage`, data, httpOptions)
       .pipe(
         tap(result => {
           this.checkLogin(result);
         }),
-        catchError(this.handleError<AddReply>('login', {} as AddReply))
+        catchError(this.handleError<AddLeaveMessage>('login', {} as AddLeaveMessage))
       );
   }
 

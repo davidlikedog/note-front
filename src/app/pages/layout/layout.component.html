@@ -15,7 +15,7 @@
       </div>
       <div class="toolBarRight">
         <div *ngIf="isLogin">
-          <a routerLink="/pages/mine">
+          <a routerLink="/pages/mine/{{userData.userName}}">
             <div class="user">
               <div class="userPhoto">
                 <img src="{{userData.photo}}" alt="">

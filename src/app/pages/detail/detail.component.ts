@@ -1,9 +1,10 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {HttpService} from '../../service/httpService/http.service';
 import {Article, Comments, OneComments, OneReply} from '../../interface/interface';
 import {MessageAlertService} from '../../service/messageAlertService/message-alert.service';
 import {RefreshCommentsService} from '../../service/refreshCommentsService/refresh-comments.service';
+import {VerifyLoginService} from '../../service/verifyLoginService/verify-login.service';
 
 @Component({
   selector: 'app-detail',
@@ -15,12 +16,16 @@ export class DetailComponent implements OnInit {
   commentsList: Array<OneComments>;
   doILike = false;
   addCommentsContent = '';
+  judgeUser: boolean;
+  isLogin: boolean;
 
   constructor(
     private route: ActivatedRoute,
     private httpService: HttpService,
     private msgAlert: MessageAlertService,
     private reFreshComments: RefreshCommentsService,
+    private router: Router,
+    private verifyLogin: VerifyLoginService,
   ) {
     this.articleDetail = new class implements Article {
       author: string;
@@ -39,12 +44,17 @@ export class DetailComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.isLogin = Boolean(window.sessionStorage.getItem('Authorization'));
+    this.verifyLogin.isLogin.subscribe(value => {
+      this.isLogin = value;
+    });
     const id: string = this.route.snapshot.paramMap.get('id');
     this.httpService.getOneArticle(id).subscribe(value => {
       if ('status' in value && value.status && 'data' in value && value.data && 'doILike' in value.data) {
         if ('articleResult' in value.data && value.data.articleResult && value.data.articleResult.length > 0) {
           this.articleDetail = value.data.articleResult[0];
           this.doILike = value.data.doILike;
+          this.judgeUser = this.articleDetail.author === window.sessionStorage.getItem('userName');
         }
       } else {
         if ('message' in value) {
@@ -106,6 +116,25 @@ export class DetailComponent implements OnInit {
           if ('message' in value) {
             this.msgAlert.onceErr(value.message);
           }
+        }
+      });
+    }
+  }
+
+  modifyPage(id) {
+    this.router.navigateByUrl(`/pages/add/${id}`);
+  }
+
+  delete(id) {
+    if (window.confirm('您确定删除该条文章吗')) {
+      this.httpService.deleteArticle(id).subscribe(result => {
+        if ('status' in result && result.status) {
+          window.location.reload();
+          if ('message' in result) {
+            this.msgAlert.onceOk(result.message);
+          }
+        } else {
+          this.msgAlert.onceErr(result.message);
         }
       });
     }

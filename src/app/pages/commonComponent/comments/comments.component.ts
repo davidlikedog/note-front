@@ -17,7 +17,8 @@ export class CommentsComponent implements OnInit {
   @Input('commentsId') commentsId: number;
 
   constructor(
-    private reply: MatBottomSheet
+    private reply: MatBottomSheet,
+    private msgAlert: MessageAlertService
   ) {
   }
 
@@ -25,15 +26,19 @@ export class CommentsComponent implements OnInit {
   }
 
   openReply(sayer): void {
-    let replyWho: string = sayer.innerHTML;
-    replyWho = replyWho.slice(0, replyWho.length - 1);
-    this.reply.open(ReplyComponent, {
-      data: {
-        replyWho: replyWho,
-        commentsId: Number(this.type === 'comments' ? this.commentsData.id : this.commentsId),
-        articleId: this.type === 'comments' ? this.commentsData.articleId : this.replyData.articleId
-      }
-    });
+    if (window.sessionStorage.getItem('Authorization')) {
+      let replyWho: string = sayer.innerHTML;
+      replyWho = replyWho.slice(0, replyWho.length - 1);
+      this.reply.open(ReplyComponent, {
+        data: {
+          replyWho: replyWho,
+          commentsId: Number(this.type === 'comments' ? this.commentsData.id : this.commentsId),
+          articleId: this.type === 'comments' ? this.commentsData.articleId : this.replyData.articleId
+        }
+      });
+    } else {
+      this.msgAlert.onceErr('请登录');
+    }
   }
 
 }

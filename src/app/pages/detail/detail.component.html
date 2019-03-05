@@ -6,7 +6,9 @@
 
     <div class="detailBody">
       <div class="title">{{articleDetail.title}}</div>
-      <div class="dateAndAuthor">{{articleDetail.author}} {{articleDetail.createTime | date:'yyyy-MM-dd HH:mm:ss'}}
+      <div class="dateAndAuthor">
+        <a routerLink="/pages/mine/{{articleDetail.author}}">{{articleDetail.author}}</a>
+        {{articleDetail.createTime | date:'yyyy-MM-dd HH:mm:ss'}}
       </div>
       <div class="description">{{articleDetail.description}}</div>
       <div class="content ck-content" [innerHTML]="articleDetail.content"></div>
@@ -23,11 +25,11 @@
         <div class="oneAction">
           <mat-icon [matMenuTriggerFor]="menu1">more_vert</mat-icon>
           <mat-menu #menu1="matMenu">
-            <button mat-menu-item>
+            <button (click)="modifyPage(articleDetail.id)" [disabled]="!isLogin || !judgeUser" mat-menu-item>
               <mat-icon class="moreIcon">edit</mat-icon>
-              <span class="moreText">修改1</span>
+              <span class="moreText">修改</span>
             </button>
-            <button mat-menu-item>
+            <button (click)="delete(articleDetail.id)" [disabled]="!isLogin || !judgeUser" mat-menu-item>
               <mat-icon class="moreIcon">delete</mat-icon>
               <span class="moreText">删除</span>
             </button>
@@ -40,7 +42,8 @@
 
         <div class="input">
           <mat-form-field class="example-full-width">
-            <input [(ngModel)]="addCommentsContent" type="text" matInput placeholder="enter sth">
+            <input (keydown)="$event.keyCode === 13 && addComments()" [(ngModel)]="addCommentsContent" type="text"
+                   matInput placeholder="enter sth">
             <button (click)="addComments()" mat-button matSuffix>
               <mat-icon class="sendComments">send</mat-icon>
             </button>
@@ -51,7 +54,8 @@
           <div *ngFor="let oneComments of commentsList" class="commentsList">
             <app-comments [commentsData]="oneComments" [type]="'comments'"></app-comments>
             <div *ngIf="oneComments.replyResult" class="reply">
-              <app-comments *ngFor="let oneReply of oneComments.replyResult" [commentsId]="oneComments.id" [replyData]="oneReply" [type]="'reply'"></app-comments>
+              <app-comments *ngFor="let oneReply of oneComments.replyResult" [commentsId]="oneComments.id"
+                            [replyData]="oneReply" [type]="'reply'"></app-comments>
             </div>
           </div>
         </div>

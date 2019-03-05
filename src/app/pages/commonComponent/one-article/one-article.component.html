@@ -3,7 +3,7 @@
   <a routerLink="/pages/detail/{{oneArticle.id}}">
 
     <div class="articleHead">
-      <div class="headLeft">
+      <div (click)="goToAuthorPage($event,oneArticle.author)" class="headLeft">
         <div class="photo">
           <img src="{{oneArticle.photo}}" alt="">
         </div>

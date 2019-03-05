@@ -4,8 +4,10 @@
   </div>
   <div class="commentsRight">
     <div class="firstLine">
-      <a #sayer routerLink="#">{{type === 'comments' ? commentsData.userName : replyData.fromUserName}}：</a>
-      <a *ngIf="type === 'reply'" routerLink="#">@{{replyData.toUserName}} </a>
+      <a #sayer routerLink="/pages/mine/{{type === 'comments' ? commentsData.userName : replyData.fromUserName}}">
+        {{type === 'comments' ? commentsData.userName : replyData.fromUserName}}：
+      </a>
+      <a *ngIf="type === 'reply'" routerLink="/pages/mine/{{replyData.toUserName}}">@{{replyData.toUserName}} </a>
       <span class="commentsContent">{{type === 'comments' ? commentsData.content : replyData.content}}</span>
     </div>
     <div class="secondLine">
