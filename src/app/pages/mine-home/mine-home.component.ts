@@ -57,7 +57,7 @@ export class MineHomeComponent implements OnInit {
           } else {
             this.haveMore = !this.haveMore;
             if ('message' in data) {
-              this.msgAlert.onceErr(data.message);
+              // this.msgAlert.onceErr(data.message);
             }
           }
         });
@@ -110,6 +110,9 @@ export class MineHomeComponent implements OnInit {
       if ('status' in data && data.status) {
         if ('data' in data) {
           this.articleList = data.data;
+          if (data.data.length <= 10) {
+            this.haveMore = false;
+          }
         } else {
           this.msgAlert.onceErr('数据获取失败');
         }
@@ -208,6 +211,12 @@ export class MineHomeComponent implements OnInit {
     }
   }
 
+  keyDownAddLeaveMsg(event, userName: string) {
+    if (event.keyCode === 13) {
+      this.addLeaveMsg(userName);
+    }
+  }
+
   saveMyPhoto(event) {
     if (event.target.files[0]) {
       const data: FormData = new FormData();
@@ -217,6 +226,7 @@ export class MineHomeComponent implements OnInit {
           if ('userPhoto' in result) {
             window.sessionStorage.setItem('userPhoto', result.userPhoto);
             this.reloadUser.reloadUser.emit(true);
+            this.oneDetailMsg.photo = result.userPhoto;
           }
         } else {
           if ('message' in result) {

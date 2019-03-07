@@ -211,7 +211,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
       }
       data.append('account', value.account.trim());
       data.append('email', value.email.trim());
-      data.append('verifyCode', value.verifyCode.trim());
+      data.append('verifyCode', value.verifyCode);
       data.append('password', String(Md5.hashStr(value.password.trim())));
       data.append('nickName', value.nickName.trim());
       this.httpService.register(data).subscribe(result => {

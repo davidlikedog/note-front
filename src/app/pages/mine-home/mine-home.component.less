@@ -31,6 +31,31 @@
     height: 100%;
     object-fit: cover;
   }
+  -webkit-transition: all ease 0.3s;
+  -moz-transition: all ease 0.3s;
+  -ms-transition: all ease 0.3s;
+  -o-transition: all ease 0.3s;
+  transition: all ease 0.3s;
+  cursor: pointer;
+
+  &:hover {
+    background: #4f4f4f;
+    &::after {
+      content: '更换头像';
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      -webkit-transform: translate(-50%, -50%);
+      -moz-transform: translate(-50%, -50%);
+      -ms-transform: translate(-50%, -50%);
+      -o-transform: translate(-50%, -50%);
+      transform: translate(-50%, -50%);
+      color: #ffffff;
+    }
+    img {
+      opacity: 0.4;
+    }
+  }
 }
 
 .name {

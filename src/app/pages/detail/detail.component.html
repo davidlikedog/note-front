@@ -42,7 +42,7 @@
 
         <div class="input">
           <mat-form-field class="example-full-width">
-            <input (keydown)="$event.keyCode === 13 && addComments()" [(ngModel)]="addCommentsContent" type="text"
+            <input (keydown)="keyDownAddComments($event)" [(ngModel)]="addCommentsContent" type="text"
                    matInput placeholder="enter sth">
             <button (click)="addComments()" mat-button matSuffix>
               <mat-icon class="sendComments">send</mat-icon>

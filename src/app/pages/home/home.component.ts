@@ -56,6 +56,9 @@ export class HomeComponent implements OnInit {
       if ('status' in data && data.status) {
         if ('data' in data) {
           this.articleList = data.data;
+          if (data.data.length <= 10) {
+            this.haveMore = false;
+          }
         } else {
           this.msgAlert.onceErr('数据获取失败');
         }

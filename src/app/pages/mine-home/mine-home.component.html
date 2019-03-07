@@ -64,7 +64,8 @@
                       </div>
                       <div class="detail">
                         <div class="articleTitle">{{one.title}}</div>
-                        <div [style.-webkit-box-orient]="'vertical'" class="articleDescription">{{one.description}}</div>
+                        <div [style.-webkit-box-orient]="'vertical'" class="articleDescription">{{one.description}}
+                        </div>
                       </div>
                     </div>
                   </a>
@@ -90,7 +91,7 @@
         <mat-tab label="我的留言">
           <div class="input">
             <mat-form-field class="example-full-width">
-              <input (keydown)="$event.keyCode === 13 && addLeaveMsg(oneDetailMsg.userName)"
+              <input (keydown)="keyDownAddLeaveMsg($event,oneDetailMsg.userName)"
                      [(ngModel)]="addLeaveMsgContent" type="text" matInput placeholder="enter sth">
               <button (click)="addLeaveMsg(oneDetailMsg.userName)" mat-button matSuffix>
                 <mat-icon class="sendComments">send</mat-icon>

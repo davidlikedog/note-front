@@ -121,6 +121,12 @@ export class DetailComponent implements OnInit {
     }
   }
 
+  keyDownAddComments(event) {
+    if (event.keyCode === 13) {
+      this.addComments();
+    }
+  }
+
   modifyPage(id) {
     this.router.navigateByUrl(`/pages/add/${id}`);
   }
