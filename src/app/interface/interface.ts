@@ -269,3 +269,23 @@ export interface AddLeaveMessage {
   status: boolean;
   message: string;
 }
+
+// 修改名字和个人简介通用前端数据格式
+export interface ModifyNameAndDescription {
+  content: string;
+}
+
+// 修改个人信息后端返回通用格式
+export interface ModifyPersonalMsg {
+  status: boolean;
+  message: string;
+  token?: string;
+}
+
+// 修改个人头像后端返回
+export interface ModifyPhoto {
+  status: boolean;
+  message: string;
+  userPhoto: string;
+}
+

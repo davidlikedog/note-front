@@ -26,6 +26,7 @@ import { MineHomeComponent } from './mine-home/mine-home.component';
 import {VerifyLogin} from './verify/verifyLogin/verifyLogin';
 
 import {PreventEventDirective} from '../directive/prevent-event.directive';
+import {TidyNumPipePipe} from '../pipe/tidy-num-pipe.pipe';
 
 @NgModule({
   imports: [
@@ -54,6 +55,7 @@ import {PreventEventDirective} from '../directive/prevent-event.directive';
     OneArticleComponent,
     MineHomeComponent,
     PreventEventDirective,
+    TidyNumPipePipe,
   ],
   providers: [
     VerifyLogin

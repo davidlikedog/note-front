@@ -7,6 +7,7 @@ import {Router} from '@angular/router';
 import {MessageAlertService} from '../../service/messageAlertService/message-alert.service';
 import {DomSanitizer} from '@angular/platform-browser';
 import {LoginData} from '../../interface/interface';
+import {VerifyLoginService} from '../../service/verifyLoginService/verify-login.service';
 
 @Component({
   selector: 'app-register',
@@ -28,7 +29,8 @@ export class RegisterComponent implements OnInit, OnDestroy {
     private msgAlert: MessageAlertService,
     private router: Router,
     private fb: FormBuilder,
-    private showUploadImg: DomSanitizer
+    private showUploadImg: DomSanitizer,
+    private verifyLogin: VerifyLoginService
   ) {
   }
 
@@ -54,7 +56,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
   verifyNickName() {
     if (!this.register.controls.nickName.invalid) {
-      const nickName = this.register.controls.nickName.value;
+      const nickName = this.register.controls.nickName.value.trim();
       this.httpService.verifyNickNameOnly(nickName).subscribe(value => {
         if ('status' in value && value.status) {
           if ('data' in value && 'isOnly' in value.data) {
@@ -205,13 +207,13 @@ export class RegisterComponent implements OnInit, OnDestroy {
       if (this.photoFile) {
         data.append('photo', this.photoFile, this.photoFile.name);
       } else {
-        data.append('photo', value.photo);
+        data.append('photo', value.photo.trim());
       }
-      data.append('account', value.account);
-      data.append('email', value.email);
-      data.append('verifyCode', value.verifyCode);
-      data.append('password', String(Md5.hashStr(value.password)));
-      data.append('nickName', value.nickName);
+      data.append('account', value.account.trim());
+      data.append('email', value.email.trim());
+      data.append('verifyCode', value.verifyCode.trim());
+      data.append('password', String(Md5.hashStr(value.password.trim())));
+      data.append('nickName', value.nickName.trim());
       this.httpService.register(data).subscribe(result => {
         if ('status' in result && result.status) {
           if ('message' in result) {
@@ -226,6 +228,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
                   window.sessionStorage.setItem('Authorization', loginResult.data.token);
                   window.sessionStorage.setItem('userPhoto', loginResult.data.photo);
                   window.sessionStorage.setItem('userName', loginResult.data.userName);
+                  this.verifyLogin.reloadUser.emit(true);
                   this.router.navigateByUrl('/home');
                 }
               } else {

@@ -26,15 +26,15 @@
     <div class="articleFoot">
       <div class="oneOperation">
         <mat-icon>visibility</mat-icon>
-        <span>{{oneArticle.read}}</span>
+        <span>{{oneArticle.read | tidyNumPipe}}</span>
       </div>
-      <div (click)="ILike($event)" [ngClass]="{'like' : oneArticle.doILike}" class="oneOperation">
+      <div (click)="ILike($event)" [ngClass]="{'like' : oneArticle.doILike}" class="oneOperation likeHover">
         <mat-icon>thumb_up_alt</mat-icon>
-        <span>{{oneArticle.like}}</span>
+        <span>{{oneArticle.like | tidyNumPipe}}</span>
       </div>
       <div class="oneOperation">
         <mat-icon>sms</mat-icon>
-        <span>{{oneArticle.comments}}</span>
+        <span>{{oneArticle.comments | tidyNumPipe}}</span>
       </div>
       <div class="oneOperation">
         <mat-icon (click)="$event.stopPropagation();$event.preventDefault()" [matMenuTriggerFor]="menu">more_vert

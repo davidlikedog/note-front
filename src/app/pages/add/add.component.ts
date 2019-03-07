@@ -117,14 +117,14 @@ export class AddComponent implements OnInit {
     }
     if (this.title !== '' && this.description !== '' && this.coverImgType !== '' && this.model.editorData !== '') {
       const articleData: FormData = new FormData();
-      articleData.append('title', this.title);
-      articleData.append('description', this.description);
+      articleData.append('title', this.title.trim());
+      articleData.append('description', this.description.trim());
       articleData.append('isPrivate', String(this.isPrivate));
       articleData.append('content', this.model.editorData);
       if (this.coverImgType === 'upload') {
         articleData.append('cover', this.uploadCover, this.uploadCover.name);
       } else {
-        articleData.append('cover', this.coverImg);
+        articleData.append('cover', this.coverImg.trim());
       }
 
       if (this.judgeIfIdInRouter()) {

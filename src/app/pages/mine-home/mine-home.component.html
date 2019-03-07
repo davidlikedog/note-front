@@ -1,12 +1,23 @@
 <div class="body" [ngStyle.xs]="{'width':'100%','padding.px':'0 10'}">
   <div class="homeBox" fxLayout="column" fxLayoutAlign="center start" fxLayoutAlign.xs="start">
-    <div class="photo">
+    <div (click)="myPhoto.click()" class="photo">
       <img src="{{oneDetailMsg.photo}}" alt="">
+      <input #myPhoto (change)="saveMyPhoto($event)" type="file" style="display: none">
     </div>
 
-    <div class="name">{{oneDetailMsg.userName}}</div>
+    <div (click)="openMyUserNameInput()" class="name">
+      <span *ngIf="!modifyMyMsg.showModifyUserNameInput">{{oneDetailMsg.userName}}</span>
+      <label *ngIf="modifyMyMsg.showModifyUserNameInput">
+        <input type="text" (blur)="saveMyName()" [(ngModel)]="oneDetailMsg.userName">
+      </label>
+    </div>
     <div class="email">{{oneDetailMsg.mail}}</div>
-    <div class="sign">{{oneDetailMsg.aboutMe}}</div>
+    <div (click)="openMyDescriptionInput()" class="sign">
+      <span *ngIf="!modifyMyMsg.showModifyDescriptionInput">{{oneDetailMsg.aboutMe}}</span>
+      <label *ngIf="modifyMyMsg.showModifyDescriptionInput">
+        <input (blur)="saveMyDescription()" type="text" [(ngModel)]="oneDetailMsg.aboutMe">
+      </label>
+    </div>
     <div class="tabs">
       <mat-tab-group mat-align-tabs="center">
 
@@ -20,56 +31,60 @@
         </mat-tab>
 
         <mat-tab label="与我相关">
-          <div class="one" *ngFor="let one of myInformation">
-            <mat-card class="aboutMe">
-              <mat-card-header class="cardHeader">
-                <div class="photoImg" mat-card-avatar>
-                  <img src="{{one.photo}}" alt="">
-                </div>
-                <mat-card-title class="author">
-                  <span (click)="goToAuthorPage($event,one.userName)">{{one.userName}}</span>
-                </mat-card-title>
-                <mat-card-subtitle>
-                  <span class="createTime">{{one.createTime | date: 'yyyy-MM-dd HH:mm:ss'}}</span>
-                </mat-card-subtitle>
-                <div (click)="openReply(sayer,one.commentsId,one.articleId)" class="reply">
-                  <button mat-button>回复</button>
-                </div>
-              </mat-card-header>
-              <mat-card-content>
-                <div class="talkContent">
+          <div *ngIf="myInformation && myInformation.length>0">
+            <div class="one" *ngFor="let one of myInformation">
+              <mat-card class="aboutMe">
+                <mat-card-header class="cardHeader">
+                  <div class="photoImg" mat-card-avatar>
+                    <img src="{{one.photo}}" alt="">
+                  </div>
+                  <mat-card-title class="author">
+                    <span (click)="goToAuthorPage($event,one.userName)">{{one.userName}}</span>
+                  </mat-card-title>
+                  <mat-card-subtitle>
+                    <span class="createTime">{{one.createTime | date: 'yyyy-MM-dd HH:mm:ss'}}</span>
+                  </mat-card-subtitle>
+                  <div (click)="openReply(sayer,one.commentsId,one.articleId)" class="reply">
+                    <button mat-button>回复</button>
+                  </div>
+                </mat-card-header>
+                <mat-card-content>
+                  <div class="talkContent">
                   <span>
-                    <a #sayer routerLink="/pages/mine/{{one.whoIsTalker}}">{{one.whoIsTalker}}：</a>
+                    <a #sayer routerLink="/pages/mine/{{one.whoIsTalker}}">{{one.whoIsTalker}}</a>
+                    ：
                     {{one.latestInformation}}
                   </span>
-                  <span class="talkTime">{{one.time | date: 'yyyy-MM-dd HH:mm:ss'}}</span>
-                </div>
-                <a routerLink="/pages/detail/{{one.articleId}}">
-                  <div class="articleBody">
-                    <div class="cover">
-                      <img src="{{one.cover}}" alt="">
+                    <span class="talkTime">{{one.time | date: 'yyyy-MM-dd HH:mm:ss'}}</span>
+                  </div>
+                  <a routerLink="/pages/detail/{{one.articleId}}">
+                    <div class="articleBody">
+                      <div class="cover">
+                        <img src="{{one.cover}}" alt="">
+                      </div>
+                      <div class="detail">
+                        <div class="articleTitle">{{one.title}}</div>
+                        <div [style.-webkit-box-orient]="'vertical'" class="articleDescription">{{one.description}}</div>
+                      </div>
                     </div>
-                    <div class="detail">
-                      <div class="articleTitle">{{one.title}}</div>
-                      <div [style.-webkit-box-orient]="'vertical'" class="articleDescription">{{one.description}}</div>
+                  </a>
+                </mat-card-content>
+                <mat-card-actions>
+                  <div *ngIf="one.comments.length>0">
+                    <div *ngFor="let oneComments of one.comments" class="commentsList">
+                      <app-comments [commentsData]="oneComments" [type]="'comments'"></app-comments>
+                      <div *ngIf="oneComments.replyResult" class="commentsReply">
+                        <app-comments *ngFor="let oneReply of oneComments.replyResult" [commentsId]="oneComments.id"
+                                      [replyData]="oneReply" type="reply"></app-comments>
+                      </div>
                     </div>
                   </div>
-                </a>
-              </mat-card-content>
-              <mat-card-actions>
-                <div *ngIf="one.comments.length>0">
-                  <div *ngFor="let oneComments of one.comments" class="commentsList">
-                    <app-comments [commentsData]="oneComments" [type]="'comments'"></app-comments>
-                    <div *ngIf="oneComments.replyResult" class="commentsReply">
-                      <app-comments *ngFor="let oneReply of oneComments.replyResult" [commentsId]="oneComments.id"
-                                    [replyData]="oneReply" type="reply"></app-comments>
-                    </div>
-                  </div>
-                </div>
-                <div *ngIf="one.comments.length===0">暂时没有评论</div>
-              </mat-card-actions>
-            </mat-card>
+                  <div *ngIf="one.comments.length===0">暂时没有评论</div>
+                </mat-card-actions>
+              </mat-card>
+            </div>
           </div>
+          <div *ngIf="!myInformation || myInformation.length===0">无</div>
         </mat-tab>
 
         <mat-tab label="我的留言">

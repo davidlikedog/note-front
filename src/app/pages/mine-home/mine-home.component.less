@@ -22,6 +22,10 @@
   left: calc(50% - @width / 2);
   width: @width;
   height: @width;
+  overflow: hidden;
+  -webkit-border-radius: @width/2;
+  -moz-border-radius: @width/2;
+  border-radius: @width/2;
   img {
     width: 100%;
     height: 100%;
@@ -141,6 +145,20 @@
       display: -webkit-box;
       -webkit-line-clamp: 2;
     }
+  }
+  -webkit-transition: all ease 0.3s;
+  -moz-transition: all ease 0.3s;
+  -ms-transition: all ease 0.3s;
+  -o-transition: all ease 0.3s;
+  transition: all ease 0.3s;
+  &:hover {
+    @Y: -2px;
+    -webkit-transform: translateY(@Y);
+    -moz-transform: translateY(-@Y);
+    -ms-transform: translateY(-@Y);
+    -o-transform: translateY(@Y);
+    transform: translateY(@Y);
+    box-shadow: 0 0 10px -1px #ceccf2;
   }
 }
 

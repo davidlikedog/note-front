@@ -44,8 +44,8 @@ export class LoginComponent implements OnInit, OnDestroy {
 
     if (valid) {
       const data: LoginData = {
-        account: value.account,
-        password: String(Md5.hashStr(value.password)),
+        account: value.account.trim(),
+        password: String(Md5.hashStr(value.password.trim())),
       };
 
       this.msgAlert.waiting('登录中...');

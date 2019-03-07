@@ -144,3 +144,23 @@
     color: #ff6060;
   }
 }
+
+.likeHover {
+  mat-icon {
+    -webkit-transition: all ease 0.3s;
+    -moz-transition: all ease 0.3s;
+    -ms-transition: all ease 0.3s;
+    -o-transition: all ease 0.3s;
+    transition: all ease 0.3s;
+  }
+  &:hover {
+    @num: 1.2;
+    mat-icon {
+      -webkit-transform: scale(@num, @num);
+      -moz-transform: scale(@num, @num);
+      -ms-transform: scale(@num, @num);
+      -o-transform: scale(@num, @num);
+      transform: scale(@num, @num);
+    }
+  }
+}

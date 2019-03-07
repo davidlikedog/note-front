@@ -19,7 +19,15 @@ import {
   AddComments,
   ReplyData,
   Comments,
-  VerifyNickName, AddReply, NewInformation, OneDetailMsg, LeaveMessage, AddLeaveMessageInner, AddLeaveMessage
+  VerifyNickName,
+  AddReply,
+  NewInformation,
+  OneDetailMsg,
+  LeaveMessage,
+  AddLeaveMessageInner,
+  AddLeaveMessage,
+  ModifyNameAndDescription,
+  ModifyPersonalMsg, ModifyPhoto
 } from '../../interface/interface';
 import {catchError, tap} from 'rxjs/operators';
 import {VerifyLoginService} from '../verifyLoginService/verify-login.service';
@@ -380,6 +388,57 @@ export class HttpService {
           this.checkLogin(result);
         }),
         catchError(this.handleError<AddLeaveMessage>('login', {} as AddLeaveMessage))
+      );
+  }
+
+  saveMyDescription(data: ModifyNameAndDescription): Observable<ModifyPersonalMsg> {
+    const token = window.sessionStorage.getItem('Authorization');
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': `Bearer ${token}`,
+      })
+    };
+    return this.http.put<ModifyPersonalMsg>(`${this.url}/saveMyDescription`, data, httpOptions)
+      .pipe(
+        tap(result => {
+          this.checkLogin(result);
+        }),
+        catchError(this.handleError<ModifyPersonalMsg>('login', {} as ModifyPersonalMsg))
+      );
+  }
+
+  saveMyName(data: ModifyNameAndDescription): Observable<ModifyPersonalMsg> {
+    const token = window.sessionStorage.getItem('Authorization');
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': `Bearer ${token}`,
+      })
+    };
+    return this.http.put<ModifyPersonalMsg>(`${this.url}/saveMyName`, data, httpOptions)
+      .pipe(
+        tap(result => {
+          this.checkLogin(result);
+        }),
+        catchError(this.handleError<ModifyPersonalMsg>('login', {} as ModifyPersonalMsg))
+      );
+  }
+
+  saveMyPhoto(data: FormData): Observable<ModifyPhoto> {
+    const token = window.sessionStorage.getItem('Authorization');
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': `Bearer ${token}`,
+      })
+    };
+    return this.http.put<ModifyPhoto>(`${this.url}/saveMyPhoto`, data, httpOptions)
+      .pipe(
+        tap(result => {
+          this.checkLogin(result);
+        }),
+        catchError(this.handleError<ModifyPhoto>('login', {} as ModifyPhoto))
       );
   }
 

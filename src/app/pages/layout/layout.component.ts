@@ -51,6 +51,12 @@ export class LayoutComponent implements OnInit {
         this.userData.userName = '';
       }
     });
+    this.verifyLogin.reloadUser.subscribe(res => {
+      if (res) {
+        this.userData.photo = window.sessionStorage.getItem('userPhoto');
+        this.userData.userName = window.sessionStorage.getItem('userName');
+      }
+    });
   }
 
   offLine() {

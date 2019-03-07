@@ -16,11 +16,11 @@
       <div class="moreAction">
         <div class="oneAction">
           <mat-icon>visibility</mat-icon>
-          <span>{{articleDetail.read}}</span>
+          <span>{{articleDetail.read | tidyNumPipe}}</span>
         </div>
-        <div (click)="like(articleDetail.id)" [ngClass]="{'like' : doILike}" class="oneAction">
+        <div (click)="like(articleDetail.id)" [ngClass]="{'like' : doILike}" class="oneAction likeHover">
           <mat-icon>thumb_up_alt</mat-icon>
-          <span>{{articleDetail.like}}</span>
+          <span>{{articleDetail.like | tidyNumPipe}}</span>
         </div>
         <div class="oneAction">
           <mat-icon [matMenuTriggerFor]="menu1">more_vert</mat-icon>

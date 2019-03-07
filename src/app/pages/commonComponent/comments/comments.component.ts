@@ -27,8 +27,7 @@ export class CommentsComponent implements OnInit {
 
   openReply(sayer): void {
     if (window.sessionStorage.getItem('Authorization')) {
-      let replyWho: string = sayer.innerHTML;
-      replyWho = replyWho.slice(0, replyWho.length - 1);
+      const replyWho: string = sayer.innerHTML.trim();
       this.reply.open(ReplyComponent, {
         data: {
           replyWho: replyWho,
