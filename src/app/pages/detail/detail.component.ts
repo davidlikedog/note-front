@@ -5,6 +5,7 @@ import {Article, Comments, OneComments, OneReply} from '../../interface/interfac
 import {MessageAlertService} from '../../service/messageAlertService/message-alert.service';
 import {RefreshCommentsService} from '../../service/refreshCommentsService/refresh-comments.service';
 import {VerifyLoginService} from '../../service/verifyLoginService/verify-login.service';
+import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
 
 @Component({
   selector: 'app-detail',
@@ -26,11 +27,12 @@ export class DetailComponent implements OnInit {
     private reFreshComments: RefreshCommentsService,
     private router: Router,
     private verifyLogin: VerifyLoginService,
+    private domSanitizer: DomSanitizer
   ) {
     this.articleDetail = new class implements Article {
       author: string;
       comments: number;
-      content: string;
+      content: string | SafeHtml;
       cover: string;
       createTime: string;
       description: string;
@@ -55,6 +57,7 @@ export class DetailComponent implements OnInit {
           this.articleDetail = value.data.articleResult[0];
           this.doILike = value.data.doILike;
           this.judgeUser = this.articleDetail.author === window.sessionStorage.getItem('userName');
+          this.articleDetail.content = this.domSanitizer.bypassSecurityTrustHtml(String(value.data.articleResult[0].content));
         }
       } else {
         if ('message' in value) {

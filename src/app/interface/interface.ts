@@ -1,3 +1,5 @@
+import {SafeHtml} from '@angular/platform-browser';
+
 export interface UserData {
   userName: string;
   mail: string;
@@ -32,7 +34,7 @@ export interface Article {
   read: number;
   comments: number;
   doILike?: boolean;
-  content?: string;
+  content?: string | SafeHtml;
 }
 
 // 所有文章的数据格式
