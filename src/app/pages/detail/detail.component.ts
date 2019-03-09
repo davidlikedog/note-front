@@ -131,7 +131,7 @@ export class DetailComponent implements OnInit {
   }
 
   modifyPage(id) {
-    this.router.navigateByUrl(`/pages/add/${id}`);
+    this.router.navigateByUrl(`/add/${id}`);
   }
 
   delete(id) {

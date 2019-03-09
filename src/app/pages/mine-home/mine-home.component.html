@@ -51,13 +51,13 @@
                 <mat-card-content>
                   <div class="talkContent">
                   <span>
-                    <a #sayer routerLink="/pages/mine/{{one.whoIsTalker}}">{{one.whoIsTalker}}</a>
+                    <a #sayer routerLink="/mine/{{one.whoIsTalker}}">{{one.whoIsTalker}}</a>
                     ：
                     {{one.latestInformation}}
                   </span>
                     <span class="talkTime">{{one.time | date: 'yyyy-MM-dd HH:mm:ss'}}</span>
                   </div>
-                  <a routerLink="/pages/detail/{{one.articleId}}">
+                  <a routerLink="/detail/{{one.articleId}}">
                     <div class="articleBody">
                       <div class="cover">
                         <img src="{{one.cover}}" alt="">

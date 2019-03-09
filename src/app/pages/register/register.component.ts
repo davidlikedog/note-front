@@ -29,7 +29,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
     private msgAlert: MessageAlertService,
     private router: Router,
     private fb: FormBuilder,
-    private showUploadImg: DomSanitizer,
+    public showUploadImg: DomSanitizer,
     private verifyLogin: VerifyLoginService
   ) {
   }

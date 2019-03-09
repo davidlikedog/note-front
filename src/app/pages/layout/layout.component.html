@@ -8,14 +8,14 @@
       <div class="toolBarLeft">
         <mat-icon>create</mat-icon>
         <span class="webTitle">
-          <a class="webName" routerLink="/pages/home">
+          <a class="webName" routerLink="/home">
             笔记
           </a>
         </span>
       </div>
       <div class="toolBarRight">
         <div *ngIf="isLogin">
-          <a routerLink="/pages/mine/{{userData.userName}}">
+          <a routerLink="/mine/{{userData.userName}}">
             <div class="user">
               <div class="userPhoto">
                 <img src="{{userData.photo}}" alt="">
@@ -25,13 +25,13 @@
           </a>
         </div>
         <div *ngIf="!isLogin">
-          <a routerLink="/pages/login">登录</a>
+          <a routerLink="/login">登录</a>
         </div>
         <div *ngIf="!isLogin">
-          <a routerLink="/pages/register">注册</a>
+          <a routerLink="/register">注册</a>
         </div>
         <div *ngIf="isLogin">
-          <a routerLink="/pages/add">发布</a>
+          <a routerLink="/add">发布</a>
         </div>
         <div *ngIf="isLogin" (click)="offLine()" class="offLine">注销</div>
       </div>
@@ -72,3 +72,4 @@
     </div>
   </div>
 </footer>
+

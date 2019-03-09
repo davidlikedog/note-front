@@ -110,7 +110,7 @@ export class MineHomeComponent implements OnInit {
       if ('status' in data && data.status) {
         if ('data' in data) {
           this.articleList = data.data;
-          if (data.data.length <= 10) {
+          if (data.data.length < 10) {
             this.haveMore = false;
           }
         } else {
@@ -182,7 +182,7 @@ export class MineHomeComponent implements OnInit {
   goToAuthorPage(event: MouseEvent, authorName: string) {
     event.stopPropagation();
     event.preventDefault();
-    window.location.href = `#/pages/mine/${authorName}`;
+    window.location.href = `#/mine/${authorName}`;
     window.location.reload();
   }
 
@@ -260,7 +260,7 @@ export class MineHomeComponent implements OnInit {
       if ('status' in result && result.status && 'token' in result) {
         window.sessionStorage.setItem('userName', this.oneDetailMsg.userName);
         window.sessionStorage.setItem('Authorization', result.token);
-        this.router.navigateByUrl(`/pages/mine/${this.oneDetailMsg.userName}`);
+        this.router.navigateByUrl(`/mine/${this.oneDetailMsg.userName}`);
         this.reloadUser.reloadUser.emit(true);
       } else {
         if ('message' in result) {

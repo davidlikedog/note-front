@@ -35,7 +35,7 @@ export class HomeComponent implements OnInit {
           } else {
             this.haveMore = !this.haveMore;
             if ('message' in data) {
-              this.msgAlert.onceErr(data.message);
+              // this.msgAlert.onceErr(data.message);
             }
           }
         });
@@ -56,7 +56,7 @@ export class HomeComponent implements OnInit {
       if ('status' in data && data.status) {
         if ('data' in data) {
           this.articleList = data.data;
-          if (data.data.length <= 10) {
+          if (data.data.length < 10) {
             this.haveMore = false;
           }
         } else {

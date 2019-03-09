@@ -48,7 +48,7 @@ export class OneArticleComponent implements OnInit {
   }
 
   modifyPage(id) {
-    window.location.href = `#/pages/add/${id}`;
+    window.location.href = `#/add/${id}`;
   }
 
   ILike(event) {
@@ -64,7 +64,7 @@ export class OneArticleComponent implements OnInit {
   goToAuthorPage(event: MouseEvent, authorName: string) {
     event.stopPropagation();
     event.preventDefault();
-    this.router.navigateByUrl(`/pages/mine/${authorName}`);
+    this.router.navigateByUrl(`/mine/${authorName}`);
   }
 
 }
